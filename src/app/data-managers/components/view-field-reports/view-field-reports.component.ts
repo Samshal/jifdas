@@ -4,6 +4,8 @@ import { DataTableDirective } from 'angular-datatables';
 
 import { ServerRequestService } from '../../../shared/services/server-request.service';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-view-field-reports',
   templateUrl: './view-field-reports.component.html',
@@ -52,7 +54,7 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
   dtTrigger: Subject<any> = new Subject<any>();
 
 
-  constructor(private serverRequest: ServerRequestService) { }
+  constructor(private serverRequest: ServerRequestService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.dtTrigger.next();
@@ -74,6 +76,11 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
       dtInstance.destroy();
       this.dtTrigger.next();
     });
+  }
+
+  openIncident(incident, content): void {
+    this.currentView = incident;
+    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
   }
 
 }

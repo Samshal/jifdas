@@ -2,3 +2,7 @@
 	width: 95vw;
 	padding-left: 0;
 }
+
+.modal-backdrop {
+	background-color: #4b5320;
+}

@@ -64,7 +64,7 @@
 	</div>
 
 	<div class="col-md-12 table-responsive">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table align-middle gs-0 gy-4">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
             <thead>
                 <tr class="fw-bolder text-muted bg-light">
                     <th>ID</th>
@@ -78,7 +78,7 @@
                 </tr>
             </thead>
             <tbody *ngIf="currentData?.length != 0">
-                <tr *ngFor="let record of currentData">
+                <tr *ngFor="let record of currentData" (click)="openIncident(record, content)">
                     <td>{{record.IncidentId}}</td>
                     <td class="min-w-200px">{{record.IncidentName}}</td>
                 	<td>
@@ -89,13 +89,13 @@
 								</span>
 							</div> -->
 							<div class="d-flex justify-content-start flex-column">
-								<a href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{record.AccountName}}</a>
+								<span class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{record.AccountName}}</span>
 								<span class="text-muted fw-bold text-muted d-block fs-7">{{record.FirstName}} {{record.LastName}}</span>
 							</div>
 						</div>
 					</td>
 					<td>
-						<a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.LGA}}, {{record.State}}</a>
+						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.LGA}}, {{record.State}}</span>
 						<span class="text-muted d-block fs-7" *ngIf="record.Locality != 'UNKNOWN LOCALITY'"><span class="text-muted fw-bold ">{{record.Locality}} </span> <span class='text-small'>Area</span></span>
 						<span class="text-muted d-block fs-7" *ngIf="record.Ward != 'UNKNOWN WARD'"><span class="text-muted fw-bold ">{{record.Ward}} </span> <span class='text-small'>Ward</span></span>
 						<span class="text-muted d-block fs-7" *ngIf="record.Village != 'UNKNOWN VILLAGE'"><span class="text-muted fw-bold ">{{record.Village}} </span> <span class='text-small'>Village</span></span>
@@ -123,3 +123,18 @@
         </table>
     </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Field Incident Report</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><app-view-single-field-report [incidentData]="currentView"></app-view-single-field-report></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
