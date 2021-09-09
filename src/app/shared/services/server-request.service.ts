@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class ServerRequestService {
 
   // private serverUrlEndpoint = 'http://172.16.70.33:6789/v1/';  // URL to web api
-  private serverUrlEndpoint = 'http://localhost:6789/v1/';  // URL to web api
-  // private serverUrlEndpoint = 'http://172.16.70.4:6789/v1/';  // URL to web api
+  // private serverUrlEndpoint = 'http://localhost:6789/v1/';  // URL to web api
+  private serverUrlEndpoint = 'http://172.16.70.4:6789/v1/';  // URL to web api
   private headers = {};
   constructor(private http: HttpClient) { 
   }
