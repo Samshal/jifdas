@@ -1,0 +1,137 @@
+<div class="page-content" style="padding: 1rem !important; margin-top: 50px;">
+  <div class="content-wrapper">
+    <div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Basic layout-->
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Record a new Incidence</h5>
+						<div class="header-elements">
+							<div class="list-icons">
+		                	</div>
+		            	</div>
+					</div>
+
+					<div class="card-body">
+						<form action="#">
+							<div class="row">
+								<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">Country:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.country" name="country" [ngbTypeahead]="searchCountries" (change)="loadRegions($event)"/>
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">Region:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.region" name="region" [ngbTypeahead]="searchRegions" (change)="loadStates($event)"/>
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">State:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.state" name="state" [ngbTypeahead]="searchStates" (change)="loadLgas($event)"/>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">LGA:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.lga" name="lga" [ngbTypeahead]="searchLGAs" (change)="loadWards($event)"/>
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">Ward:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.ward" name="ward" [ngbTypeahead]="searchWards" (change)="loadVillages($event)"/>
+												<!-- <ng-select2 [data]="select2Data.lgaList" [options]="select2Options" [(ngModel)]="formData.lga" name="lga" (ngModelChange)="loadLocalities($event)"></ng-select2> -->
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">Village:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.village" name="village" [ngbTypeahead]="searchVillages" (change)="loadLocalities($event)"/>
+												<!-- <ng-select2 [data]="select2Data.lgaList" [options]="select2Options" [(ngModel)]="formData.lga" name="lga" (ngModelChange)="loadLocalities($event)"></ng-select2> -->
+											</div>
+
+											<div class="col-md-6 form-group">
+												<label class="font-weight-semibold">Locality / Area:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.locality" name="locality" [ngbTypeahead]="searchLocalities"/>
+												<!-- <ng-select2 [data]="select2Data.localityList" [options]="select2Options" [(ngModel)]="formData.locality" name="locality"></ng-select2> -->
+											</div>
+
+											<div class="col-md-3 form-group">
+												<label class="font-weight-semibold">POI Latitude:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.poiLatitude" name="poiLatitude" (change)="updatePoi()"/>
+											</div>
+
+											<div class="col-md-3 form-group">
+												<label class="font-weight-semibold">POI Longitude:</label>
+												<input type="text" class="form-control" [(ngModel)]="formData.poiLongitude" name="poiLongitude" (change)="updatePoi()"/>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<label class="font-weight-semibold">Incident Type:</label>
+												<select class="form-control" [(ngModel)]="formData.incidentType" name="incidentType">
+													<option value="">Select an incident type</option>
+													<option *ngFor="let type of select2Data.incidentTypeList" value="{{type.id}}">{{type.text}}</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="font-weight-semibold">Incidence Description:</label>
+											<textarea rows="4" cols="5" class="form-control" placeholder="Enter information about the incident here" [(ngModel)]="formData.incidentTitle" name="incidentTitle"></textarea>
+										</div>
+
+										<div class="row">
+											<div class="col-md-8 form-group">
+												<label class="font-weight-semibold">Incidence Date:</label>
+												<input type="date" class="form-control" [(ngModel)]="formData.incidentDate" name="incidentDate">
+											</div>
+
+											<div class="col-md-4 form-group">
+												<label class="font-weight-semibold">Time:</label>
+												<input type="time" class="form-control" [(ngModel)]="formData.incidentTime" name="incidentTime">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="font-weight-semibold">Comments / Analysis:</label>
+											<textarea rows="7" cols="5" class="form-control" placeholder="Enter your comment / analysis here"  [(ngModel)]="formData.comments" name="comments"></textarea>
+										</div>
+								</div>
+								<div class="col-md-6">
+									<div class="row">
+										<div class="form-group">
+											<label class="font-weight-semibold">Upload Images:</label>
+											<input type="file" class="form-control" [ngModel]="formData.upload" (change)="showImages($event)" name="files" multiple="">
+										</div>
+										<div class="col-md-12">
+											<img class="img-fluid col-6" src="data:image/png;base64,{{base64}}" *ngFor="let base64 of formData.files"/>
+										</div>
+									</div>
+
+									<div style="height: 40vh; margin-top: 15px; margin-bottom: 10px;"
+									     leaflet 
+									     [leafletOptions]="leafletOptions"
+									     (leafletMapReady)="onMapReady($event)">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary bg-indigo" (click)="saveIncidence()">Submit Incidence Report <i class="icon-paperplane ml-2"></i></button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /basic layout -->
+			</div>
+		</div>
+    </div>
+  </div>
+</div>
+
+<app-toast-container aria-live="polite" aria-atomic="true"></app-toast-container>
