@@ -192,11 +192,11 @@ export class NewIncidenceComponent implements OnInit {
   }
 
   saveIncidence(): void {
-    if (typeof this.formData.poiLatitude !== "undefined" || this.formData.poiLatitude != ""){
+    if (typeof this.formData.poiLatitude == "undefined" || this.formData.poiLatitude == ""){
       this.formData.poiLatitude = 0;
     }
 
-    if (typeof this.formData.poiLongitude !== "undefined" || this.formData.poiLongitude != ""){
+    if (typeof this.formData.poiLongitude == "undefined" || this.formData.poiLongitude == ""){
       this.formData.poiLongitude = 0;
     }
 
@@ -258,8 +258,6 @@ export class NewIncidenceComponent implements OnInit {
       userId: this.userId,
       incidentData: incidentData
     };
-
-    console.log(payload);
     
     this.serverRequest.post("incidents/incident/new-raw-data", payload).subscribe(res => {
       this.toastService.show("Incidence has been reported successfully", { classname: 'bg-success text-white', delay: 10000 });
@@ -273,7 +271,14 @@ export class NewIncidenceComponent implements OnInit {
 
   onMapReady(map: L.Map): void {
     this.map = map;
-    this.marker = L.marker([-10,-10]);
+    this.marker = L.marker([-10,-10], {
+      icon: L.icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
     this.marker.addTo(map);
   }
 
