@@ -10,6 +10,7 @@ import { ShellComponent } from './components/shell/shell.component';
 import { ViewFieldReportsComponent } from './components/view-field-reports/view-field-reports.component';
 import { ViewSingleFieldReportComponent } from './components/view-single-field-report/view-single-field-report.component';
 import { EditFieldReportComponent } from './components/edit-field-report/edit-field-report.component';
+import { DeclineFieldReportComponent } from './components/decline-field-report/decline-field-report.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { EditFieldReportComponent } from './components/edit-field-report/edit-fi
     ShellComponent,
     ViewFieldReportsComponent,
     ViewSingleFieldReportComponent,
-    EditFieldReportComponent
+    EditFieldReportComponent,
+    DeclineFieldReportComponent
   ],
   imports: [
     CommonModule,

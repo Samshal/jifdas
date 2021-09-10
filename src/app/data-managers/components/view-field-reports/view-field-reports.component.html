@@ -145,7 +145,7 @@
 	    	<app-edit-field-report [incidentData]="currentView"></app-edit-field-report>
 	    </div>
     	<div class="col-7 left-border" *ngIf="forDecline">
-	    	Decline Reason Form Here
+	    	<app-decline-field-report [incidentData]="currentView"></app-decline-field-report>
 	    </div>
     </div>
   </div>
@@ -157,6 +157,6 @@
     <button type="button" class="btn btn-success" (click)="initForReview()">Approve Report</button>
   </div>
   <div class="modal-footer" *ngIf="forDecline">
-    <button type="button" class="btn btn-danger" (click)="initForReview()">Decline Report</button>
+    <button type="button" class="btn btn-danger" (click)="initForDecline()">Decline Report</button>
   </div>
 </ng-template>
