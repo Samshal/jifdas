@@ -1,0 +1,81 @@
+<!-- <p>{{incidentData | json}}</p> -->
+
+<div class="container" id="kt_content_container">
+	<div class="card">
+		<div class="card-body">
+			<div class="mb-5">
+				<form>
+					<div class="row">
+						<div class="col-5 form-group">
+							<label class="font-weight-semibold">Incident Type <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.IncidentTypeName}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-4 form-group">
+							<label class="font-weight-semibold">Date <span class="badge badge-light-primary fs-7 fw-bold">2021-09-02</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-3 form-group">
+							<label class="font-weight-semibold">Time <span class="badge badge-light-primary fs-7 fw-bold">11:52:00</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">Country <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Country}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">Region <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Region}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">State <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.State}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">LGA <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.LGA}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">Ward <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Ward}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">Village <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Village}}</span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">POI Latitude <span class="badge badge-light-primary fs-7 fw-bold"></span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">POI Longitude <span class="badge badge-light-primary fs-7 fw-bold"></span>:</label>
+							<input type="text" class="form-control" />
+						</div>
+					</div>
+					<div class="row more-height" *ngFor="let field of metadataFields; let pos = index;">
+						<div class="col-5 form-group">
+							<label class="font-weight-semibold">Metadata:</label>
+							<select class="form-select form-control">
+								<option></option>
+								<option>KIA</option>
+								<option>MIA</option>
+								<option>No. Of Civillians Abducted</option>
+							</select>
+						</div>
+						<div class="col-6 form-group">
+							<label class="font-weight-semibold">Value:</label>
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-1 d-flex justify-content-end align-items-center" (click)="removeMetadataField(pos)">
+							<span class="btn btn-link btn-sm"><i class="text-danger fa fa-times"></i></span>
+						</div>
+					</div>
+					<div class="row d-flex justify-content-center">
+    					<button type="button" class="btn btn-primary col-4" (click)="addMetadataField()"><i class="fa fa-plus"></i> Add Metadata</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

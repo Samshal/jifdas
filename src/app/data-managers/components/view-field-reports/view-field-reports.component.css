@@ -6,3 +6,13 @@
 .modal-backdrop {
 	background-color: #4b5320;
 }
+
+.w-50 {
+	width: 50% !important;
+}
+
+.left-border {
+	min-height: 100vh;
+	border-left:  1px solid #4b5320;
+	border-radius: 25px 0;
+}

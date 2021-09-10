@@ -9,13 +9,15 @@ import { DataManagersRoutingModule } from './data-managers-routing.module';
 import { ShellComponent } from './components/shell/shell.component';
 import { ViewFieldReportsComponent } from './components/view-field-reports/view-field-reports.component';
 import { ViewSingleFieldReportComponent } from './components/view-single-field-report/view-single-field-report.component';
+import { EditFieldReportComponent } from './components/edit-field-report/edit-field-report.component';
 
 
 @NgModule({
   declarations: [
     ShellComponent,
     ViewFieldReportsComponent,
-    ViewSingleFieldReportComponent
+    ViewSingleFieldReportComponent,
+    EditFieldReportComponent
   ],
   imports: [
     CommonModule,

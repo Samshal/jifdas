@@ -18,6 +18,8 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
   ];
 
   currentView: any = {};
+  forReview: any = false;
+  forDecline: any = false;
 
   @ViewChild(DataTableDirective, {static: false})
   dtElement;
@@ -79,8 +81,32 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
   }
 
   openIncident(incident, content): void {
+    this.forReview = false;
+    this.forDecline = false;
     this.currentView = incident;
     this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+  }
+
+  openIncidentForReview(incident, content): void {
+    this.initForReview();
+    this.currentView = incident;
+    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+  }
+
+  openIncidentForDecline(incident, content): void {
+    this.initForDecline();
+    this.currentView = incident;
+    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+  }
+
+  initForReview(): void {
+    this.forReview = true;
+    this.forDecline = false;    
+  }
+
+  initForDecline(): void {
+    this.forDecline = true;
+    this.forReview = false;    
   }
 
 }

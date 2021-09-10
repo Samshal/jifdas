@@ -78,10 +78,10 @@
                 </tr>
             </thead>
             <tbody *ngIf="currentData?.length != 0">
-                <tr *ngFor="let record of currentData" (click)="openIncident(record, content)">
-                    <td>{{record.IncidentId}}</td>
-                    <td class="min-w-200px">{{record.IncidentName}}</td>
-                	<td>
+                <tr *ngFor="let record of currentData">
+                    <td (click)="openIncident(record, content)">{{record.IncidentId}}</td>
+                    <td (click)="openIncident(record, content)" class="min-w-200px">{{record.IncidentName}}</td>
+                	<td (click)="openIncident(record, content)">
 						<div class="d-flex align-items-center">
 							<!-- <div class="symbol symbol-50px me-5">
 								<span class="symbol-label bg-light">
@@ -94,24 +94,29 @@
 							</div>
 						</div>
 					</td>
-					<td>
+					<td (click)="openIncident(record, content)">
 						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.LGA}}, {{record.State}}</span>
 						<span class="text-muted d-block fs-7" *ngIf="record.Locality != 'UNKNOWN LOCALITY'"><span class="text-muted fw-bold ">{{record.Locality}} </span> <span class='text-small'>Area</span></span>
 						<span class="text-muted d-block fs-7" *ngIf="record.Ward != 'UNKNOWN WARD'"><span class="text-muted fw-bold ">{{record.Ward}} </span> <span class='text-small'>Ward</span></span>
 						<span class="text-muted d-block fs-7" *ngIf="record.Village != 'UNKNOWN VILLAGE'"><span class="text-muted fw-bold ">{{record.Village}} </span> <span class='text-small'>Village</span></span>
 						<span class="text-muted text-small text-muted d-block fs-7">{{record.Country}}</span>
 					</td>
-                    <td>{{record.IncidentTypeName}}</td>
-                    <td>{{record.IncidentDate}}</td>
-					<td>
+                    <td (click)="openIncident(record, content)">{{record.IncidentTypeName}}</td>
+                    <td (click)="openIncident(record, content)">{{record.IncidentDate}}</td>
+					<td (click)="openIncident(record, content)">
 						<span class="badge badge-light-primary fs-7 fw-bold">Unreviewed</span>
 					</td>
                     <td>
-						<a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+						<span class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openIncidentForReview(record, content)">
 							<!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
-							<i class="fa fa-edit"></i>&nbsp;Review
+							<i class="fa fa-edit"></i>&nbsp;
 							<!--end::Svg Icon-->
-						</a>
+						</span>
+						<span class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openIncidentForDecline(record, content)">
+							<!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
+							<i class="fa fa-times text-danger"></i>&nbsp;
+							<!--end::Svg Icon-->
+						</span>
 					</td>
                 </tr>
             </tbody>
@@ -132,9 +137,26 @@
     </button>
   </div>
   <div class="modal-body">
-    <p><app-view-single-field-report [incidentData]="currentView"></app-view-single-field-report></p>
+    <div class="row">
+    	<div [ngClass]="{'col-12': !forReview && !forDecline, 'col-5': forReview || forDecline}">
+	    	<app-view-single-field-report [incidentData]="currentView"></app-view-single-field-report>
+	    </div>
+    	<div class="col-7 left-border" *ngIf="forReview">
+	    	<app-edit-field-report [incidentData]="currentView"></app-edit-field-report>
+	    </div>
+    	<div class="col-7 left-border" *ngIf="forDecline">
+	    	Decline Reason Form Here
+	    </div>
+    </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  <div class="modal-footer" *ngIf="!forReview && !forDecline">
+    <button type="button" class="btn btn-info" (click)="initForReview()">Review &amp; Approve</button>
+    <button type="button" class="btn btn-danger" (click)="initForDecline()">Decline</button>
+  </div>
+  <div class="modal-footer" *ngIf="forReview">
+    <button type="button" class="btn btn-success" (click)="initForReview()">Approve Report</button>
+  </div>
+  <div class="modal-footer" *ngIf="forDecline">
+    <button type="button" class="btn btn-danger" (click)="initForReview()">Decline Report</button>
   </div>
 </ng-template>

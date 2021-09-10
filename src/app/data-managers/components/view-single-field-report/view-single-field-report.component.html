@@ -1,41 +1,24 @@
 <!-- <p>{{incidentData | json}}</p> -->
 
 <div class="container" id="kt_content_container">
-	<!--begin::About card-->
 	<div class="card">
-		<!--begin::Body-->
 		<div class="card-body">
-			<!--begin::About-->
 			<div class="mb-5">
-				<!--begin::Wrapper-->
 				<div class="mb-1">
-					<!--begin::Top-->
 					<div class="text-center mb-5">
-						<!--begin::Title-->
 						<h3 class="fs-2hx text-dark">{{incidentData.IncidentTypeName}}</h3>
-						<!--end::Title-->
-						<!--begin::Text-->
 						<div class="fs-5 text-muted"><span class="fw-bold">{{incidentData.AccountName}}</span>
 						<br /><span>Reported on {{incidentData.DateReported}}</span></div>
-						<!--end::Text-->
 					</div>
-					<!--end::Top-->
 				</div>
-				<!--end::Wrapper-->
 
-				<!--begin::Overlay-->
 				<div class="row mb-10">
 					<div id="incident-poi" style="height: 20vh;"></div>
 				</div>
-				<!--end::Container-->
 				<div class="row mb-10">
 					<div class="col-7">
-						<!--begin::Description-->
 						<div class="fs-5 fw-bold">
-							<!--begin::Text-->
-							<p class="mb-8">{{incidentData.IncidentName}}</p>
-							<!--end::Text-->
-							<div class="table-responsive">
+							<div class="table-responsive mb-4">
 								<table class="table">
 									<tr>
 										<td class="text-muted">Country</td>
@@ -63,28 +46,21 @@
 									</tr>
 								</table>
 							</div>
+							<p class="mb-4">{{incidentData.IncidentName}}</p>
 						</div>
-						<!--end::Description-->
 					</div>
 					<div class="col-5">
 						<div class="col-12 mb-5" *ngFor="let base64 of incidentData.IncidentImages">
 							<div class="overlay">
-								<!--begin::Image-->
 								<img class="w-100 card-rounded" src="data:image/png;base64,{{base64}}" alt="" />
-								<!--end::Image-->
-								<!--begin::Links-->
 								<div class="overlay-layer bg-dark card-rounded bg-opacity-25">
 									<a href="file://data:image/png;base64,{{base64}}" target="_blank" class="btn btn-link"><i class="bi bi-eye-fill fs-2x text-white"></i></a>
 								</div>
-								<!--end::Links-->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!--end::About-->
 		</div>
-		<!--end::Body-->
 	</div>
-	<!--end::About card-->
 </div>
