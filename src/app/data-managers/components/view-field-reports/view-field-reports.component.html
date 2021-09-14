@@ -106,7 +106,7 @@
 					<td (click)="openIncident(record, content)">
 						<span class="badge badge-light-primary fs-7 fw-bold" *ngIf="record.StatusCode != 0">Unreviewed</span>
 						<span class="badge badge-success fs-7 fw-bold" *ngIf="record.StatusCode == 0">Approved</span>
-						<span class="text-dark fw-bolder text-hover-primary mb-1 fs-6" *ngIf="record.StatusCode == 0">{{record.AccountName}}</span>
+						<span class="text-dark fw-bolder text-hover-primary mb-1 fs-6" *ngIf="record.StatusCode == 0"><br/>{{record.ReviewedByAccountName}}</span>
 					</td>
                     <td *ngIf="record.StatusCode != 0">
 						<span class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openIncidentForReview(record, content)">
