@@ -32,6 +32,9 @@ import { DeclineFieldReportComponent } from './components/decline-field-report/d
     DataTablesModule,
     NgSelect2Module,
     FormsModule
+  ],
+  exports: [
+    ViewSingleFieldReportComponent
   ]
 })
 export class DataManagersModule { }

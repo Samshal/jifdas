@@ -1,0 +1,24 @@
+.wrapper {
+	width: 95vw;
+	padding-left: 0;
+}
+
+.modal-backdrop {
+	background-color: #4b5320;
+}
+
+.w-50 {
+	width: 50% !important;
+}
+
+.left-border {
+	min-height: 100vh;
+	border-left:  1px solid #4b5320;
+	border-radius: 25px 0;
+}
+
+#edit-container {
+	background:  #fff;
+	border-radius:  8px;
+	min-height: 100vh;
+}

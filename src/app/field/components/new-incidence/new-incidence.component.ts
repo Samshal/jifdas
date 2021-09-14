@@ -218,13 +218,6 @@ export class NewIncidenceComponent implements OnInit {
       description: this.formData.comments,
       images: this.formData.files,
       metadata: [
-        {number_killed_in_action: this.formData.kia},
-        {number_missing_in_action: this.formData.mia},
-        {number_wounded_in_action: this.formData.wia},
-        {number_of_civillians_killed: this.formData.civilliansKilled},
-        {number_of_civillians_abducted: this.formData.civilliansAbducted},
-        {number_of_criminals_killed: this.formData.criminalsKilled},
-        {number_of_suspect_arrested: this.formData.suspectsArrested}
       ]
     }
 
