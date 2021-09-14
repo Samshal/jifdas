@@ -7,8 +7,6 @@ import { EventsService } from '../../../shared/services/events.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import EditorJS from '@editorjs/editorjs';
-
 @Component({
   selector: 'app-view-incidents',
   templateUrl: './view-incidents.component.html',
@@ -64,7 +62,6 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
   constructor(private serverRequest: ServerRequestService, private modalService: NgbModal, private events: EventsService) { }
 
   ngOnInit(): void {
-    // const editor = new EditorJS('editorjs');
     this.dtTrigger.next();
     setTimeout(()=>{
       this.rerender();
@@ -90,5 +87,9 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     this.forReview = false;
     this.forDecline = false;
     this.currentView = incident;
+  }
+
+  openEditor(content): void {
+    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
   }
 }

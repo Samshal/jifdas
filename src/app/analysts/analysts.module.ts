@@ -12,12 +12,14 @@ import { ShellComponent } from './components/shell/shell.component';
 
 import { AnalystsRoutingModule } from './analysts-routing.module';
 import { ViewIncidentsComponent } from './components/view-incidents/view-incidents.component';
+import { AnalysisEditorComponent } from './components/analysis-editor/analysis-editor.component';
 
 
 @NgModule({
   declarations: [
     ViewIncidentsComponent,
-    ShellComponent
+    ShellComponent,
+    AnalysisEditorComponent
   ],
   imports: [
     CommonModule,
