@@ -104,9 +104,11 @@
                     <td (click)="openIncident(record, content)">{{record.IncidentTypeName}}</td>
                     <td (click)="openIncident(record, content)">{{record.IncidentDate}}</td>
 					<td (click)="openIncident(record, content)">
-						<span class="badge badge-light-primary fs-7 fw-bold">Unreviewed</span>
+						<span class="badge badge-light-primary fs-7 fw-bold" *ngIf="record.StatusCode != 0">Unreviewed</span>
+						<span class="badge badge-success fs-7 fw-bold" *ngIf="record.StatusCode == 0">Approved</span>
+						<span class="text-dark fw-bolder text-hover-primary mb-1 fs-6" *ngIf="record.StatusCode == 0">{{record.AccountName}}</span>
 					</td>
-                    <td>
+                    <td *ngIf="record.StatusCode != 0">
 						<span class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openIncidentForReview(record, content)">
 							<!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
 							<i class="fa fa-edit"></i>&nbsp;
@@ -115,6 +117,13 @@
 						<span class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="openIncidentForDecline(record, content)">
 							<!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
 							<i class="fa fa-times text-danger"></i>&nbsp;
+							<!--end::Svg Icon-->
+						</span>
+					</td>
+                    <td *ngIf="record.StatusCode == 0">
+						<span class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-1" (click)="openIncident(record, content)">
+							<!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
+							view
 							<!--end::Svg Icon-->
 						</span>
 					</td>

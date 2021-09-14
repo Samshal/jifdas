@@ -84,6 +84,7 @@ export class EditFieldReportComponent implements OnInit {
     })
 
     let payload = {
+      userId: this.userId,
       incidentId: this.incidentData.IncidentId,
       incidentData: _incidentData
     };
