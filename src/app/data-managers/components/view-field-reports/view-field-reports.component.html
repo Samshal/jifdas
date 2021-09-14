@@ -154,9 +154,9 @@
     <button type="button" class="btn btn-danger" (click)="initForDecline()">Decline</button>
   </div>
   <div class="modal-footer" *ngIf="forReview">
-    <button type="button" class="btn btn-success" (click)="initForReview()">Approve Report</button>
+    <button type="button" class="btn btn-success" (click)="sendApproveEvent()">Approve Report</button>
   </div>
   <div class="modal-footer" *ngIf="forDecline">
-    <button type="button" class="btn btn-danger" (click)="initForDecline()">Decline Report</button>
+    <button type="button" class="btn btn-danger" (click)="sendDeclineEvent()">Decline Report</button>
   </div>
 </ng-template>

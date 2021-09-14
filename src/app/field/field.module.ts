@@ -6,6 +6,8 @@ import { SharedModule } from '../shared/shared.module';
 
 import { FieldRoutingModule } from './field-routing.module';
 
+import { NgSelect2Module } from 'ng-select2';
+
 import { ShellComponent } from './components/shell/shell.component';
 import { NewIncidenceComponent } from './components/new-incidence/new-incidence.component';
 
@@ -23,6 +25,7 @@ import { NgbTypeaheadModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     FormsModule,
     LeafletModule,
+    NgSelect2Module,
     NgbTypeaheadModule, NgbToastModule
   ]
 })

@@ -8,88 +8,94 @@
 					<div class="row">
 						<div class="col-5 form-group">
 							<label class="font-weight-semibold">Incident Type <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.IncidentTypeName}}</span>:</label>
-							<input type="text" class="form-control" />
+							<!-- <input type="text" class="form-control" /> -->
+							<!-- <ng-select2 [(ngModel)]="formData.incidentType" name="incidentType" [data]="select2Data.incidentTypeList" [options]="select2Options"></ng-select2> -->
+							<select class="form-select" [(ngModel)]="formData.incidentType" name="incidentType">
+								<option></option>
+								<option *ngFor="let data of select2Data.incidentTypeList" value="{{data.id}}">{{data.text}}</option>
+							</select>
 						</div>
 						<div class="col-4 form-group">
-							<label class="font-weight-semibold">Date <br/><span class="badge badge-light-primary fs-7 fw-bold">2021-09-02</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Date <span class="badge badge-light-primary fs-7 fw-bold"></span>:<br/></label>
+							<input type="date" class="form-control" [(ngModel)]="formData.incidentDate" name="incidentDate">
 						</div>
 						<div class="col-3 form-group">
-							<label class="font-weight-semibold">Time <br/><span class="badge badge-light-primary fs-7 fw-bold">11:52:00</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Time <span class="badge badge-light-primary fs-7 fw-bold"></span>:<br/></label>
+							<input type="time" class="form-control" [(ngModel)]="formData.incidentTime" name="incidentTime">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">Country <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Country}}</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Country <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Country}}</span>:</label>
+							<!-- <ng-select2 [(ngModel)]="formData.country" name="country" [data]="select2Data.countryList" [options]="select2Options" (ngModelChange)="loadRegions($event)"></ng-select2> -->
+							<ng-select2 [(ngModel)]="formData.country" name="country" [data]="select2Data.countryList" [options]="select2Options" (ngModelChange)="loadRegions($event)"></ng-select2>
 						</div>
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">Region <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Region}}</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Region <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Region}}</span>:</label>
+							<ng-select2 [(ngModel)]="formData.region" name="region" [data]="select2Data.regionList" [options]="select2Options" (ngModelChange)="loadStates($event)"></ng-select2>
 						</div>
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">State <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.State}}</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">State <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.State}}</span>:</label>
+							<ng-select2 [(ngModel)]="formData.state" name="state" [data]="select2Data.stateList" [options]="select2Options" (ngModelChange)="loadLgas($event)"></ng-select2>
 						</div>
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">LGA <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.LGA}}</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">LGA <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.LGA}}</span>:</label>
+							<ng-select2 [(ngModel)]="formData.lga" name="lga" [data]="select2Data.lgaList" [options]="select2Options" (ngModelChange)="loadWards($event)"></ng-select2>
 						</div>
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">Ward <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Ward}}</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Ward <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Ward}}</span>:</label>
+							<input type="text" class="form-control" [(ngModel)]="formData.ward" name="ward" (change)="loadVillages($event)"/>
 						</div>
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">Village <span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Village}}</span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Village <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Village}}</span>:</label>
+							<input type="text" class="form-control" [(ngModel)]="formData.village" name="village" (change)="loadLocalities($event)"/>
 						</div>
 						<div class="col-6 form-group">
-							<label class="font-weight-semibold">POI Latitude <span class="badge badge-light-primary fs-7 fw-bold"></span>:</label>
-							<input type="text" class="form-control" />
+							<label class="font-weight-semibold">Locality / Area <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Locality}}</span>:</label>
+							<input type="text" class="form-control" [(ngModel)]="formData.locality" name="locality"/>
 						</div>
-						<div class="col-6 form-group">
-							<label class="font-weight-semibold">POI Longitude <span class="badge badge-light-primary fs-7 fw-bold"></span>:</label>
-							<input type="text" class="form-control" />
+						<div class="col-3 form-group">
+							<label class="font-weight-semibold">POI Latitude <br/><span class="badge badge-light-primary fs-7 fw-bold">{{getLatLon(incidentData.IncidentPointOfInterest)[0]}}</span>:</label>
+							<input type="text" class="form-control" [(ngModel)]="formData.poiLatitude" name="locality"/>
+						</div>
+						<div class="col-3 form-group">
+							<label class="font-weight-semibold">POI Longitude <br/><span class="badge badge-light-primary fs-7 fw-bold">{{getLatLon(incidentData.IncidentPointOfInterest)[1]}}</span>:</label>
+							<input type="text" class="form-control" [(ngModel)]="formData.poiLongitude" name="locality"/>
 						</div>
 					</div>
-					<div class="row more-height" *ngFor="let field of metadataFields; let pos = index;">
-						<div class="col-5 form-group">
+					<div class="row" *ngIf="metadataFields.length > 0">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<th>Metadata</th>
+									<th>Value</th>
+									<th>Action</th>
+								</thead>
+								<tbody>
+									<tr *ngFor="let field of metadataFields; let pos = index;">
+										<td>{{field.field}}</td>
+										<td>{{field.value}}</td>
+										<td (click)="removeMetadataField(pos)">
+											<span class="btn btn-link btn-sm"><i class="text-danger fa fa-times"></i></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row more-height">
+						<div class="col-6 form-group">
 							<label class="font-weight-semibold">Metadata:</label>
-							<select class="form-select form-control">
-								<option></option>
-								<option>KIA</option>
-								<option>WIA</option>
-								<option>MIA</option>
-								<option>CIV Killed</option>
-								<option>CIV Abducted</option>
-								<option>Weapons carted away</option>
-								<option>Weapons Recovered</option>
-								<option>Adversaries Killed</option>
-								<option>Arrested Men</option>
-								<option>Arrested Women</option>
-								<option>Arrested Children</option>
-								<option>Surrendered Men</option>
-								<option>Surrendered Women</option>
-								<option>Surrendered Children</option>
-								<option>IRS Destroyed</option>
-								<option>IRS Intercepted</option>
-								<option>Crude Oil Destroyed</option>
-								<option>Crude Oil Intercepted</option>
-								<option>DPK Destroyed</option>
-								<option>DPK Intercepted</option>
-								<option>AGO Destroyed</option>
-								<option>AGO Intercepted</option>
-								<option>PMS Destroyed</option>
-								<option>PMS Intercepted</option>
+							<select class="form-select" [(ngModel)]="selectedMetadata.field" name="selectedMetadataField">
+								<option>Select</option>
+								<option value="{{field}}" *ngFor="let field of select2Data.metadataList">{{field}}</option>
+
 							</select>
+							<!-- <ng-select2 [(ngModel)]="selectedMetadata.field" name="selectedMetadataField" [data]="select2Data.metadataList" [options]="select2Options_metadata"></ng-select2> -->
 						</div>
 						<div class="col-6 form-group">
 							<label class="font-weight-semibold">Value:</label>
-							<input type="text" class="form-control" />
-						</div>
-						<div class="col-1 d-flex justify-content-end align-items-center" (click)="removeMetadataField(pos)">
-							<span class="btn btn-link btn-sm"><i class="text-danger fa fa-times"></i></span>
+							<input type="number" class="form-control" [(ngModel)]="selectedMetadata.value" name="selectedMetadataValue"/>
 						</div>
 					</div>
 					<div class="row d-flex justify-content-center">
@@ -100,3 +106,5 @@
 		</div>
 	</div>
 </div>
+
+<app-toast-container aria-live="polite" aria-atomic="true"></app-toast-container>

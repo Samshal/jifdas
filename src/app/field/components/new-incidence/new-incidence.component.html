@@ -19,24 +19,28 @@
 										<div class="row">
 											<div class="col-md-4 form-group">
 												<label class="font-weight-semibold">Country:</label>
-												<input type="text" class="form-control" [(ngModel)]="formData.country" name="country" [ngbTypeahead]="searchCountries" (change)="loadRegions($event)"/>
+												<ng-select2 [(ngModel)]="formData.country" name="country" [data]="select2Data.countryList" [options]="select2Options" (ngModelChange)="loadRegions($event)"></ng-select2>
+												<!-- <input type="text" class="form-control" [(ngModel)]="formData.country" name="country" [ngbTypeahead]="searchCountries" (change)="loadRegions($event)"/> -->
 											</div>
 
 											<div class="col-md-4 form-group">
 												<label class="font-weight-semibold">Region:</label>
-												<input type="text" class="form-control" [(ngModel)]="formData.region" name="region" [ngbTypeahead]="searchRegions" (change)="loadStates($event)"/>
+												<ng-select2  [(ngModel)]="formData.region" name="region" [data]="select2Data.regionList" [options]="select2Options" (ngModelChange)="loadStates($event)"></ng-select2>
+												<!-- <input type="text" class="form-control" [(ngModel)]="formData.region" name="region" [ngbTypeahead]="searchRegions" (change)="loadStates($event)"/> -->
 											</div>
 
 											<div class="col-md-4 form-group">
 												<label class="font-weight-semibold">State:</label>
-												<input type="text" class="form-control" [(ngModel)]="formData.state" name="state" [ngbTypeahead]="searchStates" (change)="loadLgas($event)"/>
+												<ng-select2  [(ngModel)]="formData.state" name="state"  [data]="select2Data.stateList" [options]="select2Options" (ngModelChange)="loadLgas($event)"></ng-select2>
+												<!-- <input type="text" class="form-control" [(ngModel)]="formData.state" name="state" [ngbTypeahead]="searchStates" (change)="loadLgas($event)"/> -->
 											</div>
 										</div>
 
 										<div class="row">
 											<div class="col-md-4 form-group">
 												<label class="font-weight-semibold">LGA:</label>
-												<input type="text" class="form-control" [(ngModel)]="formData.lga" name="lga" [ngbTypeahead]="searchLGAs" (change)="loadWards($event)"/>
+												<ng-select2   [(ngModel)]="formData.lga" name="lga" [data]="select2Data.lgaList" [options]="select2Options" (ngModelChange)="loadWards($event)"></ng-select2>
+												<!-- <input type="text" class="form-control" [(ngModel)]="formData.lga" name="lga" [ngbTypeahead]="searchLGAs" (change)="loadWards($event)"/> -->
 											</div>
 
 											<div class="col-md-4 form-group">
@@ -71,10 +75,11 @@
 										<div class="row">
 											<div class="col-md-12 form-group">
 												<label class="font-weight-semibold">Incident Type:</label>
-												<select class="form-control" [(ngModel)]="formData.incidentType" name="incidentType">
+												<ng-select2 [(ngModel)]="formData.incidentType" name="incidentType" [data]="select2Data.incidentTypeList" [options]="select2Options" placeholder="Select an incident type"></ng-select2>
+												<!-- <select class="form-control" [(ngModel)]="formData.incidentType" name="incidentType">
 													<option value="">Select an incident type</option>
 													<option *ngFor="let type of select2Data.incidentTypeList" value="{{type.id}}">{{type.text}}</option>
-												</select>
+												</select> -->
 											</div>
 										</div>
 

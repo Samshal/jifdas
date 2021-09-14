@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 
 import { ServerRequestService } from '../../../shared/services/server-request.service';
+import { EventsService } from '../../../shared/services/events.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,6 +21,8 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
   currentView: any = {};
   forReview: any = false;
   forDecline: any = false;
+
+  modalRef: any;
 
   @ViewChild(DataTableDirective, {static: false})
   dtElement;
@@ -56,7 +59,7 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
   dtTrigger: Subject<any> = new Subject<any>();
 
 
-  constructor(private serverRequest: ServerRequestService, private modalService: NgbModal) { }
+  constructor(private serverRequest: ServerRequestService, private modalService: NgbModal, private events: EventsService) { }
 
   ngOnInit(): void {
     this.dtTrigger.next();
@@ -84,19 +87,19 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
     this.forReview = false;
     this.forDecline = false;
     this.currentView = incident;
-    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+    this.modalRef = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
   }
 
   openIncidentForReview(incident, content): void {
     this.initForReview();
     this.currentView = incident;
-    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+    this.modalRef = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
   }
 
   openIncidentForDecline(incident, content): void {
     this.initForDecline();
     this.currentView = incident;
-    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+    this.modalRef = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
   }
 
   initForReview(): void {
@@ -107,6 +110,15 @@ export class ViewFieldReportsComponent implements AfterViewInit, OnDestroy, OnIn
   initForDecline(): void {
     this.forDecline = true;
     this.forReview = false;    
+  }
+
+  sendApproveEvent(): void {
+    this.events.broadcast("approve-reviewed-incident", {'IncidentId': this.currentView.IncidentId})
+    // this.modalRef.close()
+  }
+
+  sendDeclineEvent(): void {
+    this.events.broadcast("decline-reviewed-incident", {'status': true})
   }
 
 }
