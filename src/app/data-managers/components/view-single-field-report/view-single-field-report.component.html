@@ -16,7 +16,7 @@
 					<div id="incident-poi" style="height: 20vh;"></div>
 				</div>
 				<div class="row mb-10">
-					<div class="col-7">
+					<div class="col-6">
 						<div class="fs-5 fw-bold">
 							<div class="table-responsive mb-4">
 								<table class="table">
@@ -46,10 +46,21 @@
 									</tr>
 								</table>
 							</div>
-							<p class="mb-4">{{incidentData.IncidentName}}</p>
 						</div>
 					</div>
-					<div class="col-5">
+					<div class="col-6">
+						<div class="fs-5 fw-bold">
+							<div class="table-responsive mb-4">
+								<table class="table">
+									<tr *ngFor="let data of incidentData.metadata">
+										<td class="text-muted">{{data.Field}}</td>
+										<td>{{data.FieldValue}}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
 						<div class="col-12 mb-5" *ngFor="let base64 of incidentData.IncidentImages">
 							<div class="overlay">
 								<img class="w-100 card-rounded" src="data:image/png;base64,{{base64}}" alt="" />
@@ -58,6 +69,9 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="col-12">
+						<p class="fs-5 mb-4">{{incidentData.IncidentName}}</p>
 					</div>
 				</div>
 			</div>

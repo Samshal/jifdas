@@ -22,6 +22,8 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
   forReview: any = false;
   forDecline: any = false;
 
+  incidentLoaded: any = false;
+
   modalRef: any;
 
   @ViewChild(DataTableDirective, {static: false})
@@ -87,6 +89,7 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     this.forReview = false;
     this.forDecline = false;
     this.currentView = incident;
+    this.incidentLoaded = true;
   }
 
   openEditor(content): void {
