@@ -82,6 +82,12 @@
                     	<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
                     		{{record.IncidentTypeName}}
                     	</span>
+                    	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
+                    		<i class="fa fa-database"></i> {{record.metadata.length}} associated metadata
+                    	</span>
+                    	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
+                    		<i class="fa fa-user"></i> {{record.ReviewedByAccountName}}
+                    	</span>
                     	<span>{{record.IncidentName}}</span>
                     </td>
 					<td (click)="openIncident(record)">
