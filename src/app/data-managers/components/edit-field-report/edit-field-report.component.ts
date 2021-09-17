@@ -22,6 +22,7 @@ export class EditFieldReportComponent implements OnInit {
   userId: any;
   metadataFields: any = [];
   incidentTypeList: any = [];
+  selectedMetadataGroup: any = '';
   selectedMetadata: any = {
     field: '',
     value: ''
@@ -227,9 +228,11 @@ export class EditFieldReportComponent implements OnInit {
 
   loadMetadataFields(): void {
     this.serverRequest.get("incidents/metadata/get-list").subscribe(res => {
-      (res.contentData).forEach(data => {
-        this.select2Data.metadataList.push(data.FieldName);
-      });
+      // (res.contentData).forEach(data => {
+      //   this.select2Data.metadataList.push(data.FieldName);
+      // });
+
+      this.select2Data.metadataList = res.contentData;
     });
   }
 

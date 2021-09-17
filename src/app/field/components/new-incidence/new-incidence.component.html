@@ -45,7 +45,8 @@
 
 											<div class="col-md-4 form-group">
 												<label class="font-weight-semibold">Ward:</label>
-												<input type="text" class="form-control" [(ngModel)]="formData.ward" name="ward" [ngbTypeahead]="searchWards" (change)="loadVillages($event)"/>
+												<ng-select2   [(ngModel)]="formData.ward" name="ward" [data]="select2Data.wardList" [options]="select2Options" (ngModelChange)="loadVillages($event)"></ng-select2>
+												<!-- <input type="text" class="form-control" [(ngModel)]="formData.ward" name="ward" [ngbTypeahead]="searchWards" (change)="loadVillages($event)"/> -->
 												<!-- <ng-select2 [data]="select2Data.lgaList" [options]="select2Options" [(ngModel)]="formData.lga" name="lga" (ngModelChange)="loadLocalities($event)"></ng-select2> -->
 											</div>
 

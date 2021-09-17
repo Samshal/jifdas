@@ -16,11 +16,11 @@
 							</select>
 						</div>
 						<div class="col-4 form-group">
-							<label class="font-weight-semibold">Date <span class="badge badge-light-primary fs-7 fw-bold"></span>:<br/></label>
+							<label class="font-weight-semibold">Date <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.IncidentDate}}</span>:</label>
 							<input type="date" class="form-control" [(ngModel)]="formData.incidentDate" name="incidentDate">
 						</div>
 						<div class="col-3 form-group">
-							<label class="font-weight-semibold">Time <span class="badge badge-light-primary fs-7 fw-bold"></span>:<br/></label>
+							<label class="font-weight-semibold">Time <br/><span class="badge badge-light-primary fs-7 fw-bold">&nbsp;</span>:</label>
 							<input type="time" class="form-control" [(ngModel)]="formData.incidentTime" name="incidentTime">
 						</div>
 					</div>
@@ -44,7 +44,8 @@
 						</div>
 						<div class="col-6 form-group">
 							<label class="font-weight-semibold">Ward <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Ward}}</span>:</label>
-							<input type="text" class="form-control" [(ngModel)]="formData.ward" name="ward" (change)="loadVillages($event)"/>
+							<!-- <input type="text" class="form-control" [(ngModel)]="formData.ward" name="ward" (change)="loadVillages($event)"/> -->
+							<ng-select2 [(ngModel)]="formData.ward" name="ward" [data]="select2Data.wardList" [options]="select2Options" (ngModelChange)="loadVillages($event)"></ng-select2>
 						</div>
 						<div class="col-6 form-group">
 							<label class="font-weight-semibold">Village <br/><span class="badge badge-light-primary fs-7 fw-bold">{{incidentData.Village}}</span>:</label>
@@ -84,16 +85,22 @@
 						</div>
 					</div>
 					<div class="row more-height">
-						<div class="col-6 form-group">
+						<div class="col-4 form-group">
+							<label class="font-weight-semibold">Category:</label>
+							<select class="form-select" [(ngModel)]="selectedMetadataGroup" name="selectedMetadataField">
+								<option>Select</option>
+								<option value="{{item.key}}" *ngFor="let item of select2Data.metadataList | keyvalue">{{item.key}}</option>
+
+							</select>
+						</div>
+						<div class="col-5 form-group">
 							<label class="font-weight-semibold">Metadata:</label>
 							<select class="form-select" [(ngModel)]="selectedMetadata.field" name="selectedMetadataField">
 								<option>Select</option>
-								<option value="{{field}}" *ngFor="let field of select2Data.metadataList">{{field}}</option>
-
+								<option value="{{field.FieldName}}" *ngFor="let field of select2Data.metadataList[selectedMetadataGroup]">{{field.FieldName}}</option>
 							</select>
-							<!-- <ng-select2 [(ngModel)]="selectedMetadata.field" name="selectedMetadataField" [data]="select2Data.metadataList" [options]="select2Options_metadata"></ng-select2> -->
 						</div>
-						<div class="col-6 form-group">
+						<div class="col-3 form-group">
 							<label class="font-weight-semibold">Value:</label>
 							<input type="number" class="form-control" [(ngModel)]="selectedMetadata.value" name="selectedMetadataValue"/>
 						</div>
