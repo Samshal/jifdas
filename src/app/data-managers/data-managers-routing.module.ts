@@ -5,6 +5,7 @@ import { AuthGuardService } from '../shared/services/auth-guard.service';
 
 import { ShellComponent } from './components/shell/shell.component';
 import { ViewFieldReportsComponent } from './components/view-field-reports/view-field-reports.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'field-reports',
         component: ViewFieldReportsComponent
+      },
+      {
+        path: 'charts',
+        component: ChartsComponent
       }
     ]
   }

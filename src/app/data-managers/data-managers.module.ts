@@ -15,7 +15,11 @@ import { ViewFieldReportsComponent } from './components/view-field-reports/view-
 import { ViewSingleFieldReportComponent } from './components/view-single-field-report/view-single-field-report.component';
 import { EditFieldReportComponent } from './components/edit-field-report/edit-field-report.component';
 import { DeclineFieldReportComponent } from './components/decline-field-report/decline-field-report.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
+import { VizComponentsModule } from '../viz-components/viz-components.module';
+
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -23,15 +27,20 @@ import { DeclineFieldReportComponent } from './components/decline-field-report/d
     ViewFieldReportsComponent,
     ViewSingleFieldReportComponent,
     EditFieldReportComponent,
-    DeclineFieldReportComponent
+    DeclineFieldReportComponent,
+    ChartsComponent
   ],
   imports: [
     CommonModule,
     DataManagersRoutingModule,
     SharedModule,
     DataTablesModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     NgSelect2Module,
-    FormsModule
+    FormsModule,
+    VizComponentsModule
   ],
   exports: [
     ViewSingleFieldReportComponent

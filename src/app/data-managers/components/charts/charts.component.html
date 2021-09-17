@@ -1,0 +1,23 @@
+<div class="page-content" style="padding: 1rem !important; margin-top: 50px;">
+	<div class="content-wrapper">
+	    <div class="content">
+			<div class="row">
+				<div class="col-md-5">
+					<app-incidences-by-region></app-incidences-by-region>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<app-incidences-by-state></app-incidences-by-state>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12" *ngFor="let region of regions">
+					<app-incidences-by-region-breakdown region="{{region}}" categoriesData="{{stringify(categoriesData[region])}}" trendsData="{{stringify(trendsData[region])}}"></app-incidences-by-region-breakdown>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
