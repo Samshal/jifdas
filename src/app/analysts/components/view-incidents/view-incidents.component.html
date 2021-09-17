@@ -75,7 +75,7 @@
                     <th>Date</th>
                 </tr>
             </thead>
-            <tbody *ngIf="currentData?.length != 0">
+            <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
                 <tr *ngFor="let record of currentData">
                     <td (click)="openIncident(record)">{{record.IncidentId}}</td>
                     <td (click)="openIncident(record)" class="min-w-200px">
@@ -88,7 +88,7 @@
                     	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
                     		<i class="fa fa-user"></i> {{record.ReviewedByAccountName}}
                     	</span>
-                    	<span>{{record.IncidentName}}</span>
+                    	<div class=" wrap-text">{{record.IncidentName}}</div>
                     </td>
 					<td (click)="openIncident(record)">
 						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.LGA}}, {{record.State}}</span>

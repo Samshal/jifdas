@@ -77,10 +77,10 @@
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody *ngIf="currentData?.length != 0">
+            <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
                 <tr *ngFor="let record of currentData">
                     <td (click)="openIncident(record, content)">{{record.IncidentId}}</td>
-                    <td (click)="openIncident(record, content)" class="min-w-200px">{{record.IncidentName}}</td>
+                    <td (click)="openIncident(record, content)" class="min-w-200px"><div class=" wrap-text">{{record.IncidentName}}</div></td>
                 	<td (click)="openIncident(record, content)">
 						<div class="d-flex align-items-center">
 							<!-- <div class="symbol symbol-50px me-5">
