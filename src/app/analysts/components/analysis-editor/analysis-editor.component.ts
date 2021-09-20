@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 
-import EditorJS from '@editorjs/editorjs';
+import * as DocumentEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'app-analysis-editor',
@@ -9,11 +9,23 @@ import EditorJS from '@editorjs/editorjs';
   styleUrls: ['./analysis-editor.component.css']
 })
 export class AnalysisEditorComponent implements OnInit {
+  @Input() incidentData;
+  
+  public Editor: any = DocumentEditor;
+  public config = {
+      placeholder: 'Type your analysis here!'
+  }
 
   constructor() { }
 
   ngOnInit(): void {
-    const editor = new EditorJS('editorjs');
+  }
+
+  public onReady( editor ) {
+      editor.ui.getEditableElement().parentElement.insertBefore(
+          editor.ui.view.toolbar.element,
+          editor.ui.getEditableElement()
+      );
   }
 
 }

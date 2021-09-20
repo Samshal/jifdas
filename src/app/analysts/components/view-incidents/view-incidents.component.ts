@@ -93,6 +93,6 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   openEditor(content): void {
-    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'xl', scrollable: true});
+    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'vw', scrollable: true});
   }
 }

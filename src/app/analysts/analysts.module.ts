@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 
 
 import { DataManagersModule } from '../data-managers/data-managers.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { DataTablesModule } from "angular-datatables";
 
@@ -26,7 +27,8 @@ import { AnalysisEditorComponent } from './components/analysis-editor/analysis-e
     AnalystsRoutingModule,
     SharedModule,
     DataTablesModule,
-    DataManagersModule
+    DataManagersModule,
+    CKEditorModule
   ]
 })
 export class AnalystsModule { }

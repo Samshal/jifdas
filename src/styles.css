@@ -6,3 +6,11 @@
 .select2-dropdown {
 	z-index: 2000000 !important;
 }
+
+.modal-vw {
+	max-width: 97vw !important;
+}
+
+.left-border {
+	border-left:  1px solid #353a16;
+}
