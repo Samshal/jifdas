@@ -11,6 +11,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
 
 import { AuthGuardService } from './services/auth-guard.service';
+import { GlobalSearchComponent } from './components/global-search/global-search.component';
+
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 
 
@@ -18,13 +21,16 @@ import { AuthGuardService } from './services/auth-guard.service';
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    ToastContainerComponent
+    ToastContainerComponent,
+    GlobalSearchComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgbToastModule,
-    RouterModule
+    RouterModule,
+    NgbTypeaheadModule,
+    NgxDaterangepickerMd.forRoot()
   ],
   providers: [
     AuthGuardService
@@ -32,7 +38,8 @@ import { AuthGuardService } from './services/auth-guard.service';
   exports: [
     HeaderComponent,
     SidebarComponent,
-    ToastContainerComponent
+    ToastContainerComponent,
+    GlobalSearchComponent
   ]
 })
 export class SharedModule { }

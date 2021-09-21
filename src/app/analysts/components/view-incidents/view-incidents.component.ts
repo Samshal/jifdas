@@ -15,6 +15,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit {
   globalDateRange = {startDate:"", endDate:""};
 
+  performGlobalSearch: any = false;
+  searchParams: any = {
+    type: 'basic',
+    keyword: '',
+    incidentType: '',
+    location: ''
+  };
+
   currentData: any = [
   ];
 
@@ -37,15 +45,28 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     serverSide: true,
     processing: true,
     ajax: (dataTablesParameters: any, callback) => {
-      const length = dataTablesParameters.length;
-      const search = dataTablesParameters.search.value;
-      const start = dataTablesParameters.start;
-      const sDate = this.globalDateRange.startDate;
-      const eDate = this.globalDateRange.endDate;
+      let length = dataTablesParameters.length;
+      let search = dataTablesParameters.search.value;
+      let start = dataTablesParameters.start;
+      let sDate = this.globalDateRange.startDate;
+      let eDate = this.globalDateRange.endDate;
+      let incidentType = 0;
+      let location = "";
+
+      if (this.performGlobalSearch){
+        search = this.searchParams.keyword;
+        incidentType = this.searchParams.incidentType;
+        location = this.searchParams.location;
+        if (this.searchParams.dateRange.startDate != ""){
+          sDate = this.searchParams.dateRange.startDate.format("YYYY-MM-DD");
+          eDate = this.searchParams.dateRange.endDate.format("YYYY-MM-DD");
+        }
+      }
 
       this.serverRequest
-      .get("incidents/incident/view-incidents?length="+length+"&start="+start+"&search="+search+"&startDate="+sDate+"&endDate="+eDate)
+      .get("incidents/incident/view-incidents?length="+length+"&start="+start+"&search="+search+"&startDate="+sDate+"&endDate="+eDate+"&incidentType="+incidentType+"&location="+location)
       .subscribe(res => {
+        this.performGlobalSearch = false;
         this.currentData = [];
         this.currentData = res.contentData.data;
 
@@ -68,6 +89,16 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     setTimeout(()=>{
       this.rerender();
     }, 500);
+
+    this.events.getEvent('perform-global-search').subscribe((data) => {
+      if (data != null && data.type != "") {
+        this.searchParams = data;
+        this.performGlobalSearch = true;
+         setTimeout(()=>{
+          this.rerender();
+        }, 500);
+      }
+    })
   }
 
   ngAfterViewInit(): void {

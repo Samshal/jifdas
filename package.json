@@ -34,6 +34,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "moment": "^2.29.1",
     "ng-select2": "^1.2.7",
+    "ngx-daterangepicker-material": "^5.0.1",
     "ngx-echarts": "^7.0.2",
     "rxjs": "~6.6.0",
     "select2": "^4.1.0-rc.0",
