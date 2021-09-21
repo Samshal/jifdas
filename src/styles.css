@@ -3,6 +3,10 @@
 @import "assets/plugins/global/plugins.bundle.css";
 @import "assets/css/style.bundle.css";
 
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 .select2-dropdown {
 	z-index: 2000000 !important;
 }
@@ -13,4 +17,8 @@
 
 .left-border {
 	border-left:  1px solid #353a16;
+}
+
+table.dataTable tbody tr {
+	background-color: transparent !important;
 }

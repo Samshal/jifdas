@@ -15,6 +15,8 @@ import { AnalystsRoutingModule } from './analysts-routing.module';
 import { ViewIncidentsComponent } from './components/view-incidents/view-incidents.component';
 import { AnalysisEditorComponent } from './components/analysis-editor/analysis-editor.component';
 
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AnalysisEditorComponent } from './components/analysis-editor/analysis-e
     SharedModule,
     DataTablesModule,
     DataManagersModule,
-    CKEditorModule
+    CKEditorModule,
+    NgxDatatableModule
   ]
 })
 export class AnalystsModule { }

@@ -17,7 +17,7 @@
 </div>
 
 <div class="row">
-	<div class="col-md-5 table-responsive">
+	<div class="col-md-5 table-responsive right-border" style="padding-left: 20px;">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
             <thead>
                 <tr class="fw-bolder text-muted bg-light">
@@ -25,6 +25,9 @@
                     <th class="min-w-200px">Incident</th>
                     <th>Location</th>
                     <th>Date</th>
+                	<th>
+                		<input type="checkbox" name="">
+                	</th>
                 </tr>
             </thead>
             <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
@@ -50,6 +53,9 @@
 						<span class="text-muted text-small text-muted d-block fs-7">{{record.Country}}</span>
 					</td>
                     <td (click)="openIncident(record)">{{record.IncidentDate}}</td>
+                	<td>
+                		<input type="checkbox" name="">
+                	</td>
                 </tr>
             </tbody>
             <tbody *ngIf="currentData?.length == 0">
@@ -59,14 +65,14 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-7 left-border" *ngIf="incidentLoaded">
+    <div class="col-md-7" *ngIf="incidentLoaded">
     	<div class="col-md-12 mt-10 mb-5">
 		    <button type="button" class="btn btn-info" style="margin-left:  15px; margin-right: 30px;">View Related Analyses</button>
 		    <button type="button" class="btn btn-success" style="margin-left: 30px;" (click)="openEditor(content)">Add New Analysis</button>
     	</div>
     	<app-view-single-field-report [incidentData]="currentView"></app-view-single-field-report>
     </div>
-    <div class="col-md-7 left-border" *ngIf="!incidentLoaded">
+    <div class="col-md-7" *ngIf="!incidentLoaded">
     	<div class="col-md-12 mt-10 mb-5 text-center">
     		<img class="img-fluid" src="assets/media/illustrations/undraw_visual_data_re_mxxo.svg" style="width: 20vw; margin-top: 20px"/>
 		    <h3 class="text-muted mt-5">Click on an incident to view or add analysis</h3>

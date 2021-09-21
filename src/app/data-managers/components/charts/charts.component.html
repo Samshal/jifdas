@@ -1,7 +1,24 @@
+<div class="wrapper d-flex flex-column flex-row-fluid">
+	<div class="card rounded-0 bgi-no-repeat bgi-position-x-end bgi-size-cover" style="background-color: #4b5320;background-size: auto 100%;">
+		<!--begin::body-->
+		<div class="card-body container pt-10 pb-8">
+			<!--begin::Title-->
+			<div class="d-flex align-items-center">
+				<h1 class="fw-bold me-3 text-white">Data Visualization</h1>
+				<span class="fw-bold text-white opacity-50">Generate statistical charts to better understand incident data</span>
+			</div>
+			<div class="d-flex flex-column">
+				<div class="d-lg-flex align-lg-items-center">
+					<app-global-search></app-global-search>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="page-content" style="padding: 1rem !important; margin-top: 50px;">
 	<div class="content-wrapper">
 	    <div class="content">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-12">
 					<app-incidences-by-region></app-incidences-by-region>
 				</div>
@@ -11,7 +28,7 @@
 				<div class="col-md-12">
 					<app-incidences-by-state></app-incidences-by-state>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="row">
 				<div class="col-md-12" *ngFor="let region of regions">

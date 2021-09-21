@@ -38,10 +38,10 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
   dtElement;
 
   dtOptions: any  = {
-    paging: false,
-    lengthChange: false,
+    paging: true,
+    lengthChange: true,
     pagingType: 'full_numbers',
-    pageLength: 100,
+    pageLength: 10,
     serverSide: true,
     processing: true,
     ajax: (dataTablesParameters: any, callback) => {
@@ -76,7 +76,19 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
           data:[]
         })
       });
-    }
+    },
+    columnDefs: [ {
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   4,
+        data: null,
+        defaultContent: '',
+    } ],
+    select: {
+        style:    'os',
+        selector: 'td:last-child'
+    },
+    order: [[ 0, 'asc' ]]
   };
 
   dtTrigger: Subject<any> = new Subject<any>();
@@ -85,6 +97,7 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
   constructor(private serverRequest: ServerRequestService, private modalService: NgbModal, private events: EventsService) { }
 
   ngOnInit(): void {
+    this.dtOptions.select = true;
     this.dtTrigger.next();
     setTimeout(()=>{
       this.rerender();
