@@ -1,0 +1,79 @@
+<button id="kt_explore_toggle" class="explore-toggle btn btn-sm bg-body btn-color-gray-700 btn-active-primary shadow-sm position-fixed px-5 fw-bolder zindex-2 top-50 mt-10 end-0 transform-90 fs-6 rounded-top-0" title="Selected Incidents" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" style="z-index: 10">
+    <span id="kt_explore_toggle_label" *ngIf="selectedIncidents.length == 0">Selected Incidents</span>
+    <span id="kt_explore_toggle_label" *ngIf="selectedIncidents.length > 0">{{selectedIncidents.length}} Incidents</span>
+</button>
+
+<div id="kt_explore" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="explore" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'350px', 'lg': '475px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_explore_toggle" data-kt-drawer-close="#kt_explore_close">
+    <!--begin::Card-->
+    <div class="card shadow-none rounded-0 w-100">
+        <!--begin::Header-->
+        <div class="card-header" id="kt_explore_header">
+            <h3 class="card-title fw-bolder text-gray-700">Explore Incidents</h3>
+            <div class="card-toolbar">
+            	<button type="button" class="btn btn-success" style="margin-left: 30px;">Start Analysis</button>
+                <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5" id="kt_explore_close">
+                    <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                    <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                            </g>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </button>
+            </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body" id="kt_explore_body">
+            <!--begin::Content-->
+            <div id="kt_explore_scroll" class="scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-dependencies="#kt_explore_header" data-kt-scroll-offset="5px">
+            	<div class="rounded border border-dashed border-gray-300 py-4 px-6 mb-5" *ngFor="let incident of incidentData; let index=index">
+					<div class="d-flex flex-stack">
+						<div class="d-flex flex-column">
+							<div class="d-flex align-items-center mb-1">
+								<div class="fs-6 fw-bold text-dark fw-bold mb-0 me-1">{{incident.IncidentTypeName}}</div>
+							</div>
+							<div class="fs-7 text-gray-800 mb-0 me-1">
+								<span class=" ">{{incident.LGA}}, {{incident.State}}</span>
+	    						<span class=" " *ngIf="incident.Locality != 'UNKNOWN LOCALITY'">
+	    							<span class="">, {{incident.Locality}} </span>
+	    							<span class='text-small'>Area</span>
+	    						</span>
+	    						<span class=" " *ngIf="incident.Ward != 'UNKNOWN WARD'">
+	    							<span class="">, {{incident.Ward}} </span>
+	    							<span class='text-small'>Ward</span>
+	    						</span>
+	    						<span class=" " *ngIf="incident.Village != 'UNKNOWN VILLAGE'">
+	    							<span class="">, {{incident.Village}} </span> 
+	    							<span class='text-small'>Village</span>
+	    						</span>
+	    						<span class=" ">, {{incident.Country}}</span>
+							</div>
+						</div>
+						<div class="text-nowrap">
+							<span class="text-muted fs-7 fw-bold me-n1"><i class="fa fa-calendar"></i> </span>
+							<span class="text-muted fs-7 fw-bolder">&nbsp;&nbsp;{{incident.IncidentDate}}</span>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="fs-7">{{incident.IncidentName}}</div>
+						<div class="table-responsive mb-4">
+							<table class="table">
+								<tr *ngFor="let data of incident.metadata">
+									<td class="text-muted">{{data.Field}}</td>
+									<td>{{data.FieldValue}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+            </div>
+            <!--end::Content-->
+        </div>
+        <!--end::Body-->
+    </div>
+    <!--end::Card-->
+</div>

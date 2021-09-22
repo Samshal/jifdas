@@ -14,6 +14,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { GlobalSearchComponent } from './components/global-search/global-search.component';
 
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { IncidenceDataSidebarComponent } from './components/incidence-data-sidebar/incidence-data-sidebar.component';
 
 
 
@@ -22,7 +23,8 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     HeaderComponent,
     SidebarComponent,
     ToastContainerComponent,
-    GlobalSearchComponent
+    GlobalSearchComponent,
+    IncidenceDataSidebarComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     HeaderComponent,
     SidebarComponent,
     ToastContainerComponent,
-    GlobalSearchComponent
+    GlobalSearchComponent,
+    IncidenceDataSidebarComponent
   ]
 })
 export class SharedModule { }

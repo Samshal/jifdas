@@ -32,6 +32,9 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
 
   incidentLoaded: any = false;
 
+  selectedIncidents: any = {};
+  groupSelect: any = false;
+
   modalRef: any;
 
   @ViewChild(DataTableDirective, {static: false})
@@ -97,7 +100,6 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
   constructor(private serverRequest: ServerRequestService, private modalService: NgbModal, private events: EventsService) { }
 
   ngOnInit(): void {
-    this.dtOptions.select = true;
     this.dtTrigger.next();
     setTimeout(()=>{
       this.rerender();
@@ -107,6 +109,9 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
       if (data != null && data.type != "") {
         this.searchParams = data;
         this.performGlobalSearch = true;
+
+        this.groupSelect = false;
+
          setTimeout(()=>{
           this.rerender();
         }, 500);
@@ -134,9 +139,23 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     this.forDecline = false;
     this.currentView = incident;
     this.incidentLoaded = true;
+
   }
 
   openEditor(content): void {
     this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'vw', scrollable: true});
+  }
+
+  broadcastIncidentSelect(): void {
+    this.events.broadcast('incident-data-selected', this.selectedIncidents);
+  }
+
+  selectAllIncidents(): void {
+    for (let key in this.currentData){
+      const data = this.currentData[key];
+      this.selectedIncidents[data.IncidentId] = this.groupSelect;
+
+      this.broadcastIncidentSelect();
+    }
   }
 }

@@ -1,3 +1,4 @@
+<app-incidence-data-sidebar></app-incidence-data-sidebar>
 <div class="wrapper d-flex flex-column flex-row-fluid">
 	<div class="card rounded-0 bgi-no-repeat bgi-position-x-end bgi-size-cover" style="background-color: #4b5320;background-size: auto 100%;">
 		<!--begin::body-->
@@ -18,52 +19,54 @@
 
 <div class="row">
 	<div class="col-md-5 table-responsive right-border" style="padding-left: 20px;">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
-            <thead>
-                <tr class="fw-bolder text-muted bg-light">
-                    <th>ID</th>
-                    <th class="min-w-200px">Incident</th>
-                    <th>Location</th>
-                    <th>Date</th>
-                	<th>
-                		<input type="checkbox" name="">
-                	</th>
-                </tr>
-            </thead>
-            <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
-                <tr *ngFor="let record of currentData">
-                    <td (click)="openIncident(record)">{{record.IncidentId}}</td>
-                    <td (click)="openIncident(record)" class="min-w-200px">
-                    	<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                    		{{record.IncidentTypeName}}
-                    	</span>
-                    	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
-                    		<i class="fa fa-database"></i> {{record.metadata.length}} associated metadata
-                    	</span>
-                    	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
-                    		<i class="fa fa-user"></i> {{record.ReviewedByAccountName}}
-                    	</span>
-                    	<div class=" wrap-text">{{record.IncidentName}}</div>
-                    </td>
-					<td (click)="openIncident(record)">
-						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.LGA}}, {{record.State}}</span>
-						<span class="text-muted d-block fs-7" *ngIf="record.Locality != 'UNKNOWN LOCALITY'"><span class="text-muted fw-bold ">{{record.Locality}} </span> <span class='text-small'>Area</span></span>
-						<span class="text-muted d-block fs-7" *ngIf="record.Ward != 'UNKNOWN WARD'"><span class="text-muted fw-bold ">{{record.Ward}} </span> <span class='text-small'>Ward</span></span>
-						<span class="text-muted d-block fs-7" *ngIf="record.Village != 'UNKNOWN VILLAGE'"><span class="text-muted fw-bold ">{{record.Village}} </span> <span class='text-small'>Village</span></span>
-						<span class="text-muted text-small text-muted d-block fs-7">{{record.Country}}</span>
-					</td>
-                    <td (click)="openIncident(record)">{{record.IncidentDate}}</td>
-                	<td>
-                		<input type="checkbox" name="">
-                	</td>
-                </tr>
-            </tbody>
-            <tbody *ngIf="currentData?.length == 0">
-                <tr>
-                    <td colspan="4">No incidences available</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="kt_explore_scroll" class="scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
+                <thead>
+                    <tr class="fw-bolder text-muted bg-light">
+                        <th>ID</th>
+                        <th class="min-w-200px">Incident</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    	<th>
+                    		<input type="checkbox" name="c0" [(ngModel)]="groupSelect" (change)="selectAllIncidents()">
+                    	</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
+                    <tr *ngFor="let record of currentData; let index=index">
+                        <td (click)="openIncident(record)">{{record.IncidentId}}</td>
+                        <td (click)="openIncident(record)" class="min-w-200px">
+                        	<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                        		{{record.IncidentTypeName}}
+                        	</span>
+                        	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
+                        		<i class="fa fa-database"></i> {{record.metadata.length}} associated metadata
+                        	</span>
+                        	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
+                        		<i class="fa fa-user"></i> {{record.ReviewedByAccountName}}
+                        	</span>
+                        	<div class=" wrap-text">{{record.IncidentName}}</div>
+                        </td>
+    					<td (click)="openIncident(record)">
+    						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.LGA}}, {{record.State}}</span>
+    						<span class="text-muted d-block fs-7" *ngIf="record.Locality != 'UNKNOWN LOCALITY'"><span class="text-muted fw-bold ">{{record.Locality}} </span> <span class='text-small'>Area</span></span>
+    						<span class="text-muted d-block fs-7" *ngIf="record.Ward != 'UNKNOWN WARD'"><span class="text-muted fw-bold ">{{record.Ward}} </span> <span class='text-small'>Ward</span></span>
+    						<span class="text-muted d-block fs-7" *ngIf="record.Village != 'UNKNOWN VILLAGE'"><span class="text-muted fw-bold ">{{record.Village}} </span> <span class='text-small'>Village</span></span>
+    						<span class="text-muted text-small text-muted d-block fs-7">{{record.Country}}</span>
+    					</td>
+                        <td (click)="openIncident(record)">{{record.IncidentDate}}</td>
+                    	<td>
+                    		<input type="checkbox" name="selectCheckbox-{{index}}" [(ngModel)]="selectedIncidents[record.IncidentId]" (change)="broadcastIncidentSelect()"/>
+                    	</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="currentData?.length == 0">
+                    <tr>
+                        <td colspan="4">No incidences available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="col-md-7" *ngIf="incidentLoaded">
     	<div class="col-md-12 mt-10 mb-5">

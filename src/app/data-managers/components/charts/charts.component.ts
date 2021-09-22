@@ -6,6 +6,8 @@ import { ServerRequestService } from '../../../shared/services/server-request.se
 import { StorageService } from '../../../shared/services/storage.service';
 import { EventsService } from '../../../shared/services/events.service';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
@@ -21,7 +23,16 @@ export class ChartsComponent implements OnInit {
     location: ''
   };
 
-  constructor(private serverRequest: ServerRequestService, private storage: StorageService, private events: EventsService) { }
+  locationKeyword: any = "";
+
+  searchedLocations: any = {
+    country: [],
+    state: [],
+    lga: [],
+    region: []
+  };
+
+  constructor(private serverRequest: ServerRequestService, private storage: StorageService, private events: EventsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadIncidencesByRegionData();
@@ -66,6 +77,40 @@ export class ChartsComponent implements OnInit {
 
   stringify(data: any): any {
     return JSON.stringify(data);
+  }
+
+  openLocationSearch(content): any {
+    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'lg', scrollable: true});
+  }
+
+  searchLocation(): any {
+    this.searchedLocations = {
+      country: [],
+      state: [],
+      lga: [],
+      region: []
+    }
+
+    this.serverRequest
+    .get("incidents/search/location?keyword="+this.locationKeyword)
+    .subscribe(response => {
+      const resp = response.contentData;
+      for (let index in resp){
+        const loc = resp[index];
+        if (!(this.searchedLocations.country.includes(loc.Country))){
+          this.searchedLocations.country.push(loc.Country);
+        }
+        if (!(this.searchedLocations.country.includes(loc.Region))){
+          this.searchedLocations.region.push(loc.Region);
+        }
+        if (!(this.searchedLocations.state.includes(loc.State))){
+          this.searchedLocations.state.push(loc.State);
+        }
+        if (!(this.searchedLocations.lga.includes(loc.LGA))){
+          this.searchedLocations.lga.push(loc.LGA);
+        }
+      }
+    })
   }
 
 }
