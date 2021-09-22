@@ -100,7 +100,7 @@ export class ChartsComponent implements OnInit {
         if (!(this.searchedLocations.country.includes(loc.Country))){
           this.searchedLocations.country.push(loc.Country);
         }
-        if (!(this.searchedLocations.country.includes(loc.Region))){
+        if (!(this.searchedLocations.region.includes(loc.Region))){
           this.searchedLocations.region.push(loc.Region);
         }
         if (!(this.searchedLocations.state.includes(loc.State))){
