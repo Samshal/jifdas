@@ -16,7 +16,9 @@ import { GlobalSearchComponent } from './components/global-search/global-search.
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { IncidenceDataSidebarComponent } from './components/incidence-data-sidebar/incidence-data-sidebar.component';
 
+import { AnalysisEditorComponent } from './components/analysis-editor/analysis-editor.component';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -24,15 +26,17 @@ import { IncidenceDataSidebarComponent } from './components/incidence-data-sideb
     SidebarComponent,
     ToastContainerComponent,
     GlobalSearchComponent,
-    IncidenceDataSidebarComponent
+    IncidenceDataSidebarComponent,
+    AnalysisEditorComponent
   ],
   imports: [
     CommonModule,
-    FormsModule,
     NgbToastModule,
     RouterModule,
     NgbTypeaheadModule,
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    CKEditorModule,
+    FormsModule
   ],
   providers: [
     AuthGuardService
@@ -42,7 +46,8 @@ import { IncidenceDataSidebarComponent } from './components/incidence-data-sideb
     SidebarComponent,
     ToastContainerComponent,
     GlobalSearchComponent,
-    IncidenceDataSidebarComponent
+    IncidenceDataSidebarComponent,
+    AnalysisEditorComponent
   ]
 })
 export class SharedModule { }

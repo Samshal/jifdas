@@ -43,6 +43,7 @@
             "scripts": [
               "src/assets/js/scripts.bundle.js",
               "node_modules/jquery/dist/jquery.js",
+              "src/assets/js/ckeditor5/build/ckeditor.js",
               "src/assets/js/jquery.datatables.min.js",
               "node_modules/select2/dist/js/select2.min.js",
               "node_modules/datatables.net-select/js/dataTables.select.js",
@@ -120,6 +121,10 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     }

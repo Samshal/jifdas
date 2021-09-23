@@ -108,8 +108,8 @@
 				<label class="fs-6 form-label fw-bolder text-dark">REGION</label>
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.region">
-					<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.region; let index=index">
+					<input class="form-check-input" type="checkbox" id="kt_search_category_2_{{index}}" />
 					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{loc}}</label>
 				</div>
 			</div>

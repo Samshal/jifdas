@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 declare var KTDrawer: any;
 declare var KTApp: any;
+declare var KTMenu: any;
 
 @Component({
   selector: 'app-root',
@@ -14,5 +15,6 @@ export class AppComponent {
   ngOnInit(): void {
     KTDrawer.init();
     KTApp.init();
+    KTMenu.init();
   }
 }

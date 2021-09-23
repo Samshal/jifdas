@@ -15,7 +15,6 @@ import { ShellComponent } from './components/shell/shell.component';
 
 import { AnalystsRoutingModule } from './analysts-routing.module';
 import { ViewIncidentsComponent } from './components/view-incidents/view-incidents.component';
-import { AnalysisEditorComponent } from './components/analysis-editor/analysis-editor.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -23,8 +22,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [
     ViewIncidentsComponent,
-    ShellComponent,
-    AnalysisEditorComponent
+    ShellComponent
   ],
   imports: [
     CommonModule,

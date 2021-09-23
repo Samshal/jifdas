@@ -5,7 +5,6 @@ import { AuthGuardService } from '../shared/services/auth-guard.service';
 
 import { ShellComponent } from './components/shell/shell.component';
 import { ViewIncidentsComponent } from './components/view-incidents/view-incidents.component';
-import { AnalysisEditorComponent } from './components/analysis-editor/analysis-editor.component';
 
 const routes: Routes = [
   {
@@ -16,10 +15,6 @@ const routes: Routes = [
       {
         path: 'incidents',
         component: ViewIncidentsComponent
-      },
-      {
-        path: 'editor',
-        component: AnalysisEditorComponent
       }
     ]
   }

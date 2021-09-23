@@ -17,27 +17,33 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row" style=" margin-top: 10px;">
 	<div class="col-md-5 table-responsive right-border" style="padding-left: 20px;">
         <div id="kt_explore_scroll" class="scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
                 <thead>
                     <tr class="fw-bolder text-muted bg-light">
-                        <th>ID</th>
+                        <th>
+                            <div class="form-check form-check-sm">
+                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target=".widget-9-check" name="c0" [(ngModel)]="groupSelect" (change)="selectAllIncidents()"/>
+                            </div>
+                            <!-- <input type="checkbox" name="c0" [(ngModel)]="groupSelect" (change)="selectAllIncidents()"> -->
+                        </th>
                         <th class="min-w-200px">Incident</th>
                         <th>Location</th>
                         <th>Date</th>
-                    	<th>
-                    		<input type="checkbox" name="c0" [(ngModel)]="groupSelect" (change)="selectAllIncidents()">
-                    	</th>
                     </tr>
                 </thead>
                 <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
                     <tr *ngFor="let record of currentData; let index=index">
-                        <td (click)="openIncident(record)">{{record.IncidentId}}</td>
+                        <td>
+                            <div class="form-check form-check-sm">
+                                <input type="checkbox" class="form-check-input" name="selectCheckbox-{{index}}" [(ngModel)]="selectedIncidents[record.IncidentId]" (change)="broadcastIncidentSelect()"/>
+                            </div>
+                        </td>
                         <td (click)="openIncident(record)" class="min-w-200px">
                         	<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                        		{{record.IncidentTypeName}}
+                        		<span class="text-muted">#{{record.IncidentId}}:</span> {{record.IncidentTypeName}}
                         	</span>
                         	<span class="text-muted text-hover-primary d-block mb-1 fs-6">
                         		<i class="fa fa-database"></i> {{record.metadata.length}} associated metadata
@@ -55,9 +61,6 @@
     						<span class="text-muted text-small text-muted d-block fs-7">{{record.Country}}</span>
     					</td>
                         <td (click)="openIncident(record)">{{record.IncidentDate}}</td>
-                    	<td>
-                    		<input type="checkbox" name="selectCheckbox-{{index}}" [(ngModel)]="selectedIncidents[record.IncidentId]" (change)="broadcastIncidentSelect()"/>
-                    	</td>
                     </tr>
                 </tbody>
                 <tbody *ngIf="currentData?.length == 0">
@@ -69,11 +72,60 @@
         </div>
     </div>
     <div class="col-md-7" *ngIf="incidentLoaded">
-    	<div class="col-md-12 mt-10 mb-5">
+    	<!-- <div class="col-md-12 mt-10 mb-5">
 		    <button type="button" class="btn btn-info" style="margin-left:  15px; margin-right: 30px;">View Related Analyses</button>
 		    <button type="button" class="btn btn-success" style="margin-left: 30px;" (click)="openEditor(content)">Add New Analysis</button>
-    	</div>
-    	<app-view-single-field-report [incidentData]="currentView"></app-view-single-field-report>
+    	</div> -->
+        <div class="card ">
+            <div class="card-header card-header-stretch">
+                <h3 class="card-title"><span class="text-muted">#{{currentView.IncidentId}}: </span> {{currentView.IncidentTypeName}}</h3>
+                <div class="card-toolbar">
+                    <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">View Incident</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9">View Metadata</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">Generate Charts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="kt_tab_pane_7" role="tabpanel">
+                        <app-view-single-field-report [incidentData]="currentView"></app-view-single-field-report>
+                    </div>
+
+                    <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+                       <div class="col-12">
+                        <div class="fs-5 fw-bold">
+                            <div class="table-responsive mb-4">
+                                    <table class="table">
+                                        <tr *ngFor="let data of currentView.metadata">
+                                            <td class="text-bold">{{data.Field}}</td>
+                                            <td>{{data.FieldValue}}</td>
+                                        </tr>
+                                        <tr *ngIf="currentView.metadata.length == 0">
+                                            <td colspan="2" class="fs-4 text-align-center">
+                                                <i class="fa fa-exclamation-circle text-warning"></i>
+                                                <span class="text-muted">No metadata has been added for this incident</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-7" *ngIf="!incidentLoaded">
     	<div class="col-md-12 mt-10 mb-5 text-center">
@@ -92,7 +144,7 @@
   </div>
   <div class="modal-body">
   	<div class="row" id="editor-container">
-  		<app-analysis-editor [incidentData]="currentView"></app-analysis-editor>
+  		<!-- <app-analysis-editor [incidentData]="currentView"></app-analysis-editor> -->
   	</div>
   </div>
   <div class="modal-footer">

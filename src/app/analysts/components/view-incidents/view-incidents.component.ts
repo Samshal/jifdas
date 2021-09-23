@@ -82,16 +82,9 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     },
     columnDefs: [ {
         orderable: false,
-        className: 'select-checkbox',
-        targets:   4,
-        data: null,
-        defaultContent: '',
-    } ],
-    select: {
-        style:    'os',
-        selector: 'td:last-child'
-    },
-    order: [[ 0, 'asc' ]]
+        targets:   0
+    }],
+    order: [[1, 'asc']]
   };
 
   dtTrigger: Subject<any> = new Subject<any>();
@@ -106,15 +99,18 @@ export class ViewIncidentsComponent implements AfterViewInit, OnDestroy, OnInit 
     }, 500);
 
     this.events.getEvent('perform-global-search').subscribe((data) => {
-      if (data != null && data.type != "") {
+      console.log(data)
+      if (data !== null && data.type != "") {
         this.searchParams = data;
         this.performGlobalSearch = true;
 
         this.groupSelect = false;
 
-         setTimeout(()=>{
-          this.rerender();
-        }, 500);
+        setTimeout(()=>{
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.ajax.reload();
+          });
+        }, 800);
       }
     })
   }

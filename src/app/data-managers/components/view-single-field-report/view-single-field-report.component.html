@@ -6,7 +6,7 @@
 			<div class="mb-5">
 				<div class="mb-1">
 					<div class="text-center mb-5">
-						<h3 class="fs-2hx text-dark">{{incidentData.IncidentTypeName}}</h3>
+						<h3 class="fs-2hx text-dark"><span class="text-muted">#{{incidentData.IncidentId}}:</span> {{incidentData.IncidentTypeName}}</h3>
 						<div class="fs-5 text-muted"><span class="fw-bold">{{incidentData.AccountName}}</span>
 						<br /><span>Reported on {{incidentData.DateReported}}</span></div>
 					</div>
@@ -56,6 +56,12 @@
 										<td class="text-muted">{{data.Field}}</td>
 										<td>{{data.FieldValue}}</td>
 									</tr>
+                                    <tr *ngIf="incidentData.metadata.length == 0">
+                                        <td colspan="2" class="fs-4 text-align-center">
+                                            <i class="fa fa-exclamation-circle text-warning"></i>
+                                            <span class="text-muted">No metadata has been added for this incident</span>
+                                        </td>
+                                    </tr>
 								</table>
 							</div>
 						</div>

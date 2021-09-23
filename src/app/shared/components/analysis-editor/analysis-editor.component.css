@@ -1,0 +1,5 @@
+:host ::ng-deep .ck-editor__editable_inline {
+    height: 80vh;
+    overflow-y: scroll;
+}
+
