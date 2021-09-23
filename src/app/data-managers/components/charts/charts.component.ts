@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent implements OnInit {
+  metadata: any;
 
   performGlobalSearch: any = false;
   searchParams: any = {
@@ -32,9 +33,17 @@ export class ChartsComponent implements OnInit {
     region: []
   };
 
+  selectedLocations: any = {
+    country: {},
+    state: {},
+    lga: {},
+    region: {}
+  };
+
   constructor(private serverRequest: ServerRequestService, private storage: StorageService, private events: EventsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.loadMetadataFields();
     this.loadIncidencesByRegionData();
 
     this.events.getEvent('perform-global-search').subscribe((data) => {
@@ -61,6 +70,17 @@ export class ChartsComponent implements OnInit {
     endDate: ''
   };
 
+  modal: any;
+  metadataList: any = [];
+  selectedMetadata: any = {};
+
+  loadMetadataFields(): void {
+    this.serverRequest.get("incidents/metadata/get-list").subscribe(res => {
+
+      this.metadataList = res.contentData;
+    });
+  }
+
   loadIncidencesByRegionData():void {
     const sDate = this.globalDateRange.startDate;
     const eDate = this.globalDateRange.endDate;   
@@ -80,7 +100,11 @@ export class ChartsComponent implements OnInit {
   }
 
   openLocationSearch(content): any {
-    this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'lg', scrollable: true});
+    this.modal = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'lg', scrollable: true});
+  }
+
+  closeModal(): any {
+    this.modal.close();
   }
 
   searchLocation(): any {
@@ -111,6 +135,14 @@ export class ChartsComponent implements OnInit {
         }
       }
     })
+  }
+
+  openMetadataModal(content): any {
+    this.modal = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'md', scrollable: true});
+  }
+
+  toArray(data: any): any {
+    return Object.keys(data).map(key => data[key])
   }
 
 }

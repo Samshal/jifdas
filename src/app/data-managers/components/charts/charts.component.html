@@ -24,14 +24,68 @@
 						<div class="position-relative">
 							<button class="btn btn-light btn-active-light-primary btn-color-gray-400 me-3" (click)="openLocationSearch(content)">Search Locations</button>
 						</div>
-						<div id="kt_explore_scroll" class="scroll-y me-n5 pe-5 mt-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
-							<div class="form-check form-check-custom form-check-solid mb-5">
-								<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
-								<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">Vehicles Carted Away</label>
+						<div class="me-n5 pe-5 mt-5" *ngIf="(selectedLocations.country | keyvalue)?.length > 0">
+							<p class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7">Country</p>
+							<div id="kt_explore_scroll" class="scroll-y" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
+								<div *ngFor="let loc of selectedLocations.country | keyvalue">
+									<div class="form-check form-check-custom form-check-solid mb-5"*ngIf="loc.value == true">
+										<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+										<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;"> {{loc.key}}</label>
+									</div>
+								</div>
 							</div>
+							<div class="separator separator-dashed my-2"></div>
 						</div>
-						<div class="separator separator-dashed my-8"></div>
-						<div class="mb-5">
+						<div class="me-n5 pe-5 mt-5" *ngIf="(selectedLocations.region | keyvalue)?.length > 0">
+							<p class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7">Region</p>
+							<div id="kt_explore_scroll" class="scroll-y" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
+								<div *ngFor="let loc of selectedLocations.region | keyvalue">
+									<div class="form-check form-check-custom form-check-solid mb-5"*ngIf="loc.value == true">
+										<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+										<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;"> {{loc.key}}</label>
+									</div>
+								</div>
+							</div>
+							<div class="separator separator-dashed my-2"></div>
+						</div>
+						<div class="me-n5 pe-5 mt-5" *ngIf="(selectedLocations.state | keyvalue)?.length > 0">
+							<p class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7">State</p>
+							<div id="kt_explore_scroll" class="scroll-y" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
+								<div *ngFor="let loc of selectedLocations.state | keyvalue">
+									<div class="form-check form-check-custom form-check-solid mb-5"*ngIf="loc.value == true">
+										<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+										<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;"> {{loc.key}}</label>
+									</div>
+								</div>
+							</div>
+							<div class="separator separator-dashed my-2"></div>
+						</div>
+						<div class="me-n5 pe-5 mt-5" *ngIf="(selectedLocations.lga | keyvalue)?.length > 0">
+							<p class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7">LGA</p>
+							<div id="kt_explore_scroll" class="scroll-y" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
+								<div *ngFor="let loc of selectedLocations.lga | keyvalue">
+									<div class="form-check form-check-custom form-check-solid mb-5"*ngIf="loc.value == true">
+										<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+										<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;"> {{loc.key}}</label>
+									</div>
+								</div>
+							</div>
+							<div class="separator separator-dashed my-2"></div>
+						</div>
+						<div class="mb-5 mt-5">
+							<label class="fs-6 form-label fw-bolder text-dark">Filter Metadata</label>
+							<input type="text" class="form-control form-control form-control-solid" name="city" (click)="openMetadataModal(metadataContent)"/>
+						</div>
+						<div class="mb-10">
+							<div *ngFor="let meta of selectedMetadata | keyvalue">
+								<div class="form-check form-check-custom form-check-solid mb-5" *ngIf="meta.value == true">
+									<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+									<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{meta.key}}</label>
+								</div>
+							</div>
+							<div class="separator separator-dashed my-2"></div>
+						</div>
+						<div class="mb-5 mt-5">
 							<label class="fs-6 form-label fw-bolder text-dark">Chart Type</label>
 							<select class="form-select form-select-solid" data-control="select2" data-placeholder="In Progress" data-hide-search="true">
 								<option value=""></option>
@@ -40,16 +94,6 @@
 								<option value="2" selected="selected">Line Chart</option>
 								<option value="3">Map</option>
 							</select>
-						</div>
-						<div class="mb-5">
-							<label class="fs-6 form-label fw-bolder text-dark">Filter Metadata</label>
-							<input type="text" class="form-control form-control form-control-solid" name="city" />
-						</div>
-						<div class="mb-10">
-							<div class="form-check form-check-custom form-check-solid mb-5">
-								<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
-								<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">Vehicles Carted Away</label>
-							</div>
 						</div>
 						<div class="d-flex align-items-center justify-content-end">
 							<a href="#" class="btn btn-primary">Apply Filter</a>
@@ -97,9 +141,9 @@
 				<label class="fs-6 form-label fw-bolder text-dark">COUNTRY</label>
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.country">
-					<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
-					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{loc}}</label>
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.country; let index=index">
+					<input class="form-check-input" type="checkbox" id="loc_search_country_{{index}}" name="loc_search_country_{{index}}" [(ngModel)]="selectedLocations.country[loc]"/>
+					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_country_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
 			</div>
   		</div>
@@ -109,8 +153,8 @@
 			</div>
 			<div class="mb-1">
 				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.region; let index=index">
-					<input class="form-check-input" type="checkbox" id="kt_search_category_2_{{index}}" />
-					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{loc}}</label>
+					<input class="form-check-input" type="checkbox" id="loc_search_region_{{index}}" name="loc_search_region_{{index}}" [(ngModel)]="selectedLocations.region[loc]" />
+					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_region_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
 			</div>
   		</div>
@@ -119,9 +163,9 @@
 				<label class="fs-6 form-label fw-bolder text-dark">STATE</label>
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.state">
-					<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
-					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{loc}}</label>
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.state; let index=index">
+					<input class="form-check-input" type="checkbox" id="loc_search_state_{{index}}" name="loc_search_state_{{index}}" [(ngModel)]="selectedLocations.state[loc]"/>
+					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_state_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
 			</div>
 		</div>
@@ -130,15 +174,60 @@
 				<label class="fs-6 form-label fw-bolder text-dark">LGA</label>
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.lga">
-					<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
-					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{loc}}</label>
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.lga; let index=index">
+					<input class="form-check-input" type="checkbox" id="loc_search_lga_{{index}}" name="loc_search_lga_{{index}}" [(ngModel)]="selectedLocations.lga[loc]"/>
+					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_lga_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
 			</div>
 		</div>
   	</div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success">Save Analysis</button>
+    <button type="button" class="btn btn-success" (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #metadataContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Select Metadata</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  	<!--begin::Accordion-->
+	<div class="accordion accordion-icon-toggle" id="kt_accordion_metadata">
+	    <div class="mb-5" *ngFor="let metadata of metadataList | keyvalue; let index=index">
+	        <!--begin::Header-->
+	        <div class="accordion-header py-3 d-flex" data-bs-toggle="collapse" [attr.data-bs-target]="'#kt_accordion_metadata_item_'+index">
+	            <span class="accordion-icon">
+	            	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<polygon points="0 0 24 0 24 24 0 24"></polygon>
+							<rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1"></rect>
+							<path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+						</g>
+					</svg>
+	            </span>
+	            <h3 class="fs-4 fw-bold mb-0 ms-4">{{metadata.key}}</h3>
+	        </div>
+	        <!--end::Header-->
+
+	        <!--begin::Body-->
+	        <div id="kt_accordion_metadata_item_{{index}}" class="fs-6 collapse show ps-10" data-bs-parent="#kt_accordion_metadata">
+	        	<div *ngFor="let field of toArray(metadata.value); let i=index">
+					<div class="form-check form-check-custom form-check-solid mb-5">
+						<input class="form-check-input" type="checkbox" id="kt_m_{{index}}_{{i}}" [(ngModel)]="selectedMetadata[field.FieldName]" />
+						<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_m_{{index}}_{{i}}" style="padding-left: 20px;"> {{field.FieldName}}</label>
+					</div>
+				</div>
+	        </div>
+	        <!--end::Body-->
+	    </div>
+	</div>
+	<!--end::Accordion-->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="closeModal()">Close</button>
   </div>
 </ng-template>
