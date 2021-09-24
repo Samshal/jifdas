@@ -15,6 +15,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ChartsComponent implements OnInit {
   metadata: any;
+  requiredChartType: any;
+  chartData: any = {};
 
   performGlobalSearch: any = false;
   searchParams: any = {
@@ -24,7 +26,7 @@ export class ChartsComponent implements OnInit {
     location: ''
   };
 
-  locationKeyword: any = "";
+  locationKeyword: any = "Nigeria";
 
   searchedLocations: any = {
     country: [],
@@ -45,6 +47,7 @@ export class ChartsComponent implements OnInit {
   ngOnInit(): void {
     this.loadMetadataFields();
     this.loadIncidencesByRegionData();
+    this.searchLocation();
 
     this.events.getEvent('perform-global-search').subscribe((data) => {
       if (data != null && data.type != "") {
@@ -55,12 +58,13 @@ export class ChartsComponent implements OnInit {
         if (this.searchParams.dateRange.startDate != ""){
           this.globalDateRange.startDate = this.searchParams.dateRange.startDate.format("YYYY-MM-DD");
           this.globalDateRange.endDate = this.searchParams.dateRange.endDate.format("YYYY-MM-DD");
-          this.loadIncidencesByRegionData();
+          // this.loadIncidencesByRegionData();
         }
       }
     })
   }
 
+  requestingData: any = false;
   categoriesData;
   trendsData;
   regions: any = [
@@ -143,6 +147,30 @@ export class ChartsComponent implements OnInit {
 
   toArray(data: any): any {
     return Object.keys(data).map(key => data[key])
+  }
+
+  loadData(): void {
+    this.requestingData = true;
+    const sDate = this.globalDateRange.startDate;
+    const eDate = this.globalDateRange.endDate;   
+
+    const reqData = {
+      locations: this.selectedLocations,
+      startDate: sDate,
+      endDate: eDate,
+      metadata: this.selectedMetadata
+    }
+
+    this.serverRequest
+    .post("incidents/stats/load-by-spec", reqData)
+    .subscribe(response => {
+      this.requestingData = false;
+      this.chartData = response.contentData;
+      // this.categoriesData = data["types"]["categories"];
+      // this.trendsData = data["trends"]["categories"];
+
+      // this.regions = Object.keys(this.categoriesData);
+    })
   }
 
 }

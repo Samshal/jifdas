@@ -6,11 +6,13 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { IncidencesByRegionComponent } from './incidences-by-region/incidences-by-region.component';
 import { IncidencesByStateComponent } from './incidences-by-state/incidences-by-state.component';
 import { IncidencesByRegionBreakdownComponent } from './incidences-by-region-breakdown/incidences-by-region-breakdown.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 // import { IncidencesMapComponent } from './incidences-map/incidences-map.component';
 
 @NgModule({
   declarations: [IncidencesByRegionComponent,
-   IncidencesByStateComponent, IncidencesByRegionBreakdownComponent],
+   IncidencesByStateComponent, IncidencesByRegionBreakdownComponent, BarChartComponent, PieChartComponent],
   imports: [
     CommonModule,
     NgxEchartsModule.forRoot({
@@ -20,7 +22,9 @@ import { IncidencesByRegionBreakdownComponent } from './incidences-by-region-bre
   exports: [
   	IncidencesByRegionComponent,
     IncidencesByStateComponent,
-    IncidencesByRegionBreakdownComponent
+    IncidencesByRegionBreakdownComponent,
+    BarChartComponent,
+    PieChartComponent
     // IncidencesMapComponent
   ]
 })
