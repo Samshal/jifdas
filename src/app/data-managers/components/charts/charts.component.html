@@ -21,6 +21,15 @@
 			<div class="flex-column flex-lg-row-auto w-100 w-lg-250px w-xxl-325px mb-8 mb-lg-0 me-lg-9 me-5">
 				<div class="card">
 					<div class="card-body">
+						<div class="mb-5 mt-5">
+							<label class="fs-6 form-label fw-bolder text-dark">Search type</label>
+							<select class="form-select form-select-solid" [(ngModel)]="requiredSearchType">
+								<option value=""></option>
+								<option value="incident">Incident Type</option>
+								<option value="metadata">Metadata</option>
+							</select>
+						</div>
+
 						<div class="position-relative">
 							<button class="btn btn-light btn-active-light-primary btn-color-gray-400 me-3" (click)="openLocationSearch(content)">Search Locations</button>
 						</div>
@@ -72,18 +81,35 @@
 							</div>
 							<div class="separator separator-dashed my-2"></div>
 						</div>
-						<div class="mb-5 mt-5">
-							<label class="fs-6 form-label fw-bolder text-dark">Filter Metadata</label>
-							<input type="text" class="form-control form-control form-control-solid" name="city" (click)="openMetadataModal(metadataContent)"/>
-						</div>
-						<div class="mb-10">
-							<div *ngFor="let meta of selectedMetadata | keyvalue">
-								<div class="form-check form-check-custom form-check-solid mb-5" *ngIf="meta.value == true">
-									<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
-									<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{meta.key}}</label>
-								</div>
+						<div *ngIf="requiredSearchType == 'metadata'">
+							<div class="mb-5 mt-5">
+								<label class="fs-6 form-label fw-bolder text-dark">Filter Metadata</label>
+								<input type="text" class="form-control form-control form-control-solid" name="city" (click)="openMetadataModal(metadataContent)"/>
 							</div>
-							<div class="separator separator-dashed my-2"></div>
+							<div class="mb-10">
+								<div *ngFor="let meta of selectedMetadata | keyvalue">
+									<div class="form-check form-check-custom form-check-solid mb-5" *ngIf="meta.value == true">
+										<input class="form-check-input" type="checkbox" id="kt_search_category_1" />
+										<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category_1" style="padding-left: 20px;">{{meta.key}}</label>
+									</div>
+								</div>
+								<div class="separator separator-dashed my-2"></div>
+							</div>
+						</div>
+						<div *ngIf="requiredSearchType == 'incident'">
+							<div class="mb-5 mt-5">
+								<label class="fs-6 form-label fw-bolder text-dark">Filter Incident</label>
+								<input type="text" class="form-control form-control form-control-solid" name="city" (click)="openIncidentModal(incidentContent)"/>
+							</div>
+							<div class="mb-10">
+								<div *ngFor="let type of selectedIncidents | keyvalue">
+									<div class="form-check form-check-custom form-check-solid mb-5" *ngIf="type.value == true">
+										<input class="form-check-input" type="checkbox" id="kt_search_category__" />
+										<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_search_category__" style="padding-left: 20px;">{{type.key}}</label>
+									</div>
+								</div>
+								<div class="separator separator-dashed my-2"></div>
+							</div>
 						</div>
 						<div class="mb-5 mt-5">
 							<label class="fs-6 form-label fw-bolder text-dark">Chart Type</label>
@@ -230,6 +256,28 @@
 	    </div>
 	</div>
 	<!--end::Accordion-->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #incidentContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Select Incident Type</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  	<div class="mb-5">
+    	<div *ngFor="let field of incidentTypeList; let index=index">
+			<div class="form-check form-check-custom form-check-solid mb-5">
+				<input class="form-check-input" type="checkbox" id="kt_type_{{index}}" [(ngModel)]="selectedIncidents[field.text]" />
+				<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_type_{{index}}" style="padding-left: 20px;"> {{field.text}}</label>
+			</div>
+		</div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-success" (click)="closeModal()">Close</button>

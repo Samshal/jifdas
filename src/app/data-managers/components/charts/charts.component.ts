@@ -15,6 +15,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ChartsComponent implements OnInit {
   metadata: any;
+  requiredSearchType: any = 'metadata';
   requiredChartType: any;
   chartData: any = {};
 
@@ -46,8 +47,9 @@ export class ChartsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMetadataFields();
-    this.loadIncidencesByRegionData();
+    // this.loadIncidencesByRegionData();
     this.searchLocation();
+    this.loadIncidentTypes();
 
     this.events.getEvent('perform-global-search').subscribe((data) => {
       if (data != null && data.type != "") {
@@ -77,6 +79,21 @@ export class ChartsComponent implements OnInit {
   modal: any;
   metadataList: any = [];
   selectedMetadata: any = {};
+  selectedIncidents: any = {};
+
+  incidentTypeList: any = [];
+
+  loadIncidentTypes(): void {
+    this.serverRequest.get("incidents/incident-type/view-incident-types?resourceId=1").subscribe(res => {
+      this.incidentTypeList = [];
+      (res.contentData).forEach(data => {
+        this.incidentTypeList.push({
+          "id":data.IncidentTypeId,
+          "text":data.IncidentTypeName,
+        })
+      })
+    });       
+  }
 
   loadMetadataFields(): void {
     this.serverRequest.get("incidents/metadata/get-list").subscribe(res => {
@@ -145,6 +162,10 @@ export class ChartsComponent implements OnInit {
     this.modal = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'md', scrollable: true});
   }
 
+  openIncidentModal(content): any {
+    this.modal = this.modalService.open(content, {backdropClass: 'modal-backdrop', size: 'md', scrollable: true});
+  }
+
   toArray(data: any): any {
     return Object.keys(data).map(key => data[key])
   }
@@ -154,22 +175,36 @@ export class ChartsComponent implements OnInit {
     const sDate = this.globalDateRange.startDate;
     const eDate = this.globalDateRange.endDate;   
 
-    const reqData = {
+    let url = "incidents/stats/load-by-metadata";
+    let reqData: any = {
       locations: this.selectedLocations,
       startDate: sDate,
-      endDate: eDate,
-      metadata: this.selectedMetadata
+      endDate: eDate
+    }
+
+    if (this.requiredSearchType == 'metadata'){
+      reqData = {
+        locations: this.selectedLocations,
+        startDate: sDate,
+        endDate: eDate,
+        metadata: this.selectedMetadata
+      }
+    }
+    else {
+      reqData = {
+        locations: this.selectedLocations,
+        startDate: sDate,
+        endDate: eDate,
+        incidentTypes: this.selectedIncidents
+      }
+      url = "incidents/stats/load-by-incident-types";
     }
 
     this.serverRequest
-    .post("incidents/stats/load-by-spec", reqData)
+    .post(url, reqData)
     .subscribe(response => {
       this.requestingData = false;
       this.chartData = response.contentData;
-      // this.categoriesData = data["types"]["categories"];
-      // this.trendsData = data["trends"]["categories"];
-
-      // this.regions = Object.keys(this.categoriesData);
     })
   }
 
