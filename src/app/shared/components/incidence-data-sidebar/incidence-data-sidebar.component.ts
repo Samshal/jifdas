@@ -47,4 +47,8 @@ export class IncidenceDataSidebarComponent implements OnInit {
       });
   }
 
+  broadcastSaveRequest(): void {
+    this.events.broadcast('save-current-analysis', {});
+  }
+
 }

@@ -4,6 +4,8 @@ import { EChartsOption, registerMap } from 'echarts';
 import { ServerRequestService } from '../../shared/services/server-request.service';
 import { EventsService } from '../../shared/services/events.service';
 
+import { copyImageToClipboard } from 'copy-image-clipboard'
+
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
@@ -117,6 +119,30 @@ export class BarChartComponent implements OnInit {
     else {
       this.chart.clear();
     }
+  }
+
+  copyToClipboard(): void {
+    const dataUrl = this.chart.getDataURL({
+      pixelRatio: 2,
+      backgroundColor: '#fff'
+    })
+
+    const image = new Image();
+    image.src = dataUrl;
+
+    try {
+     copyImageToClipboard(dataUrl)
+      .then(() => {
+        console.log('Image Copied')
+      })
+      .catch((e) => {
+        console.log('Error: ', e.message)
+      })
+    } catch (error) {
+        console.error(error);
+    } 
+
+    console.log(dataUrl);
   }
 
 }

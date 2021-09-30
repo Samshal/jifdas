@@ -1,0 +1,23 @@
+<div class="wrapper d-flex flex-column flex-row-fluid">
+	<div class="card rounded-0 bgi-no-repeat bgi-position-x-end bgi-size-cover" style="background-color: #4b5320;background-size: auto 100%;">
+		<!--begin::body-->
+		<div class="card-body container pt-10 pb-8">
+			<!--begin::Title-->
+			<div class="d-flex align-items-center">
+				<h1 class="fw-bold me-3 text-white">Analysis Workspace</h1>
+				<span class="fw-bold text-white opacity-50">Analysis &amp; Report Portal</span>
+			</div>
+			<div class="d-flex flex-column">
+				<div class="d-lg-flex align-lg-items-center">
+					<!-- <app-global-search></app-global-search> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" style=" margin-top: 10px;">
+	<div class="col-md-12 document-editor">
+		<ckeditor [editor]="Editor" [config]="config" (ready)="onReady($event)" [(ngModel)]="analysisText"></ckeditor>
+	</div>
+</div>

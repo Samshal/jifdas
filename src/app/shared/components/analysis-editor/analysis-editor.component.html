@@ -1,5 +1,78 @@
 <div class="row">
 	<div class="col-md-12 document-editor">
-		<ckeditor [editor]="Editor" [config]="config" (ready)="onReady($event)"></ckeditor>
+		<ckeditor [editor]="Editor" [config]="config" (ready)="onReady($event)" [(ngModel)]="analysisText"></ckeditor>
 	</div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Save Analysis</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  	<div class="row" id="content-container">
+  		<div class="mb-10 pt-0">
+  			<h3 class="fs-3 fw-bold">{{analysisTitle}}</h3>
+			<!--begin::Label-->
+			<label class="form-label fw-bold">Category:</label>
+			<!--end::Label-->
+			<!--begin::Input-->
+			<div>
+				<select class="form-select form-select-solid" [(ngModel)]="analysisClassification">
+					<option></option>
+					<option value="{{type.ClassificationId}}" *ngFor="let type of classificationTypes">{{type.ClassificationName}}</option>
+				</select>
+			</div>
+			<!--end::Input-->
+		</div>
+		<div *ngIf="relatedIncidents.length > 0">
+	  		<div class="card-body pt-0" *ngFor="let incident of relatedIncidentData">
+				<!--begin::Item-->
+				<div class="d-flex align-items-center bg-light-success rounded p-5 mb-7">
+					<div class="flex-grow me-2">
+						<a href="#" class="fw-bolder text-gray-800 text-hover-primary fs-6"># {{incident.IncidentId}}: {{incident.IncidentTypeName}}
+						</a>
+						<span class="fw-bold d-block">
+							<span class=" ">{{incident.LGA}}, {{incident.State}}</span>
+							<span class=" " *ngIf="incident.Locality != 'UNKNOWN LOCALITY'">
+								<span class="">, {{incident.Locality}} </span>
+								<span class='text-small'>Area</span>
+							</span>
+							<span class=" " *ngIf="incident.Ward != 'UNKNOWN WARD'">
+								<span class="">, {{incident.Ward}} </span>
+								<span class='text-small'>Ward</span>
+							</span>
+							<span class=" " *ngIf="incident.Village != 'UNKNOWN VILLAGE'">
+								<span class="">, {{incident.Village}} </span> 
+								<span class='text-small'>Village</span>
+							</span>
+							<span class=" ">, {{incident.Country}}</span>
+						</span>
+						<span class="text-muted fw-bold d-block">{{incident.IncidentDate}}</span>
+					</div>
+					<!--end::Title-->
+				</div>
+				<!--end::Item-->
+			</div>
+		</div>
+		<div *ngIf="relatedIncidents.length == 0">
+			<div class="card-body pt-0">
+				<!--begin::Item-->
+				<div class="d-flex align-items-center bg-light-warning rounded p-5 mb-7">
+					<div class="flex-grow me-2">
+						<a href="#" class="text-gray-800 text-hover-primary fs-6">No associated incidents
+						</a>
+					</div>
+					<!--end::Title-->
+				</div>
+				<!--end::Item-->
+			</div>
+		</div>
+  	</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="saveAnalysis()">Save </button>
+  </div>
+</ng-template>

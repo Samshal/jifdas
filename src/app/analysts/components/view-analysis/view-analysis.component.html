@@ -1,0 +1,126 @@
+<!-- <app-incidence-data-sidebar></app-incidence-data-sidebar> -->
+<div class="wrapper d-flex flex-column flex-row-fluid">
+	<div class="card rounded-0 bgi-no-repeat bgi-position-x-end bgi-size-cover" style="background-color: #4b5320;background-size: auto 100%;">
+		<!--begin::body-->
+		<div class="card-body container pt-10 pb-8">
+			<!--begin::Title-->
+			<div class="d-flex align-items-center">
+				<h1 class="fw-bold me-3 text-white">Analysis Workspace</h1>
+				<span class="fw-bold text-white opacity-50">Analysis &amp; Report Portal</span>
+			</div>
+			<div class="d-flex flex-column">
+				<div class="d-lg-flex align-lg-items-center">
+					<!-- <app-global-search></app-global-search> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" style=" margin-top: 10px;">
+	<div class="col-md-5 table-responsive right-border" style="padding-left: 20px;">
+        <div id="kt_explore_scroll" class="scroll-y me-n5 pe-5" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_explore_body" data-kt-scroll-offset="5px">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
+                <thead>
+                    <tr class="fw-bolder text-muted bg-light">
+                        <!-- <th>
+                            <div class="form-check form-check-sm">
+                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target=".widget-9-check" name="c0" [(ngModel)]="groupSelect" (change)="selectAllanalysiss()"/>
+                            </div>
+                        </th> -->
+                        <th class="min-w-200px">Analysis</th>
+                        <th>Analyst</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
+                    <tr *ngFor="let record of currentData; let index=index">
+                        <!-- <td>
+                            <div class="form-check form-check-sm">
+                                <input type="checkbox" class="form-check-input" name="selectCheckbox-{{index}}" [(ngModel)]="selectedanalysiss[record.analysisId]" (change)="broadcastanalysisSelect()"/>
+                            </div>
+                        </td> -->
+                        <td (click)="openAnalysis(record)" class="min-w-200px">
+                        	<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                        		<span class="text-muted">#{{record.GeneralAnalysisId}}:</span> {{record.ClassificationName}}
+                        	</span>
+                        	<div class=" wrap-text" [innerHtml]="record.AnalysisText"></div>
+                        </td>
+    					<td (click)="openAnalysis(record)">
+    						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.AccountName}}</span>
+    					</td>
+                        <td (click)="openAnalysis(record)">{{record.DateCreated}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="currentData?.length == 0">
+                    <tr>
+                        <td colspan="3">No incidences available</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-7" *ngIf="analysisLoaded">
+    	<!-- <div class="col-md-12 mt-10 mb-5">
+		    <button type="button" class="btn btn-info" style="margin-left:  15px; margin-right: 30px;">View Related Analyses</button>
+		    <button type="button" class="btn btn-success" style="margin-left: 30px;" (click)="openEditor(content)">Add New Analysis</button>
+    	</div> -->
+        <div class="card ">
+            <div class="card-header card-header-stretch">
+                <h3 class="card-title"><span class="text-muted">#{{currentView.GeneralAnalysisId}}: </span> {{currentView.ClassificationName}}</h3>
+                <div class="card-toolbar">
+                    <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">View Analysis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9">View Related Incidents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">Change Log</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="kt_tab_pane_7" role="tabpanel">
+                        <app-view-single-analysis [analysisData]="currentView"></app-view-single-analysis>
+                    </div>
+
+                    <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
+                       <div class="col-12">
+                       </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7" *ngIf="!analysisLoaded">
+    	<div class="col-md-12 mt-10 mb-5 text-center">
+    		<img class="img-fluid" src="assets/media/illustrations/undraw_visual_data_re_mxxo.svg" style="width: 20vw; margin-top: 20px"/>
+		    <h3 class="text-muted mt-5">Click on an analysis to begin</h3>
+    	</div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add new analysis</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  	<div class="row" id="editor-container">
+  		<!-- <app-analysis-editor [analysisData]="currentView"></app-analysis-editor> -->
+  	</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success">Save Analysis</button>
+  </div>
+</ng-template>

@@ -17,12 +17,18 @@ import { AnalystsRoutingModule } from './analysts-routing.module';
 import { ViewIncidentsComponent } from './components/view-incidents/view-incidents.component';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.component';
+import { ViewSingleAnalysisComponent } from './components/view-single-analysis/view-single-analysis.component';
+import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
 
 
 @NgModule({
   declarations: [
     ViewIncidentsComponent,
-    ShellComponent
+    ShellComponent,
+    ViewAnalysisComponent,
+    ViewSingleAnalysisComponent,
+    AnalysisWorkspaceComponent
   ],
   imports: [
     CommonModule,

@@ -29,6 +29,7 @@
     "angular-datatables": "^12.0.0",
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^4.5.0",
+    "copy-image-clipboard": "^2.0.1",
     "datatables.net-buttons": "^2.0.0",
     "datatables.net-buttons-dt": "^2.0.0",
     "datatables.net-select": "^1.3.3",
