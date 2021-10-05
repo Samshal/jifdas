@@ -14,6 +14,7 @@ import { NewIncidenceComponent } from './components/new-incidence/new-incidence.
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgbTypeaheadModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 @NgModule({
   declarations: [
     ShellComponent,
