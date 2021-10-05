@@ -2,13 +2,13 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 
-import { ServerRequestService } from '../../../shared/services/server-request.service';
-import { EventsService } from '../../../shared/services/events.service';
+import { ServerRequestService } from '../../services/server-request.service';
+import { EventsService } from '../../services/events.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'analysts-view-analysis',
+  selector: 'app-view-analysis',
   templateUrl: './view-analysis.component.html',
   styleUrls: ['./view-analysis.component.css']
 })

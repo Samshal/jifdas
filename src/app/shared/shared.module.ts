@@ -6,6 +6,10 @@ import { FormsModule } from '@angular/forms';
 
 import { NgbTypeaheadModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { DataTablesModule } from "angular-datatables";
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ToastContainerComponent } from './components/toast-container/toast-container.component';
@@ -19,6 +23,9 @@ import { IncidenceDataSidebarComponent } from './components/incidence-data-sideb
 import { AnalysisEditorComponent } from './components/analysis-editor/analysis-editor.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.component';
+import { ViewSingleAnalysisComponent } from './components/view-single-analysis/view-single-analysis.component';
+import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +34,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ToastContainerComponent,
     GlobalSearchComponent,
     IncidenceDataSidebarComponent,
-    AnalysisEditorComponent
+    AnalysisEditorComponent,
+    ViewAnalysisComponent,
+    ViewSingleAnalysisComponent,
+    AnalysisWorkspaceComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +46,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     NgbTypeaheadModule,
     NgxDaterangepickerMd.forRoot(),
     CKEditorModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule,
+    NgxDatatableModule,
   ],
   providers: [
     AuthGuardService
@@ -47,7 +59,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ToastContainerComponent,
     GlobalSearchComponent,
     IncidenceDataSidebarComponent,
-    AnalysisEditorComponent
+    AnalysisEditorComponent,
+    ViewAnalysisComponent,
+    ViewSingleAnalysisComponent,
+    AnalysisWorkspaceComponent
   ]
 })
 export class SharedModule { }

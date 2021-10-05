@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange} from '@angular/core';
-import  * as L from 'leaflet'; 
 
 @Component({
   selector: 'app-view-single-analysis',

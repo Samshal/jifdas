@@ -10,7 +10,7 @@ import { StorageService } from '../../services/storage.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'app-analysis-editor',
@@ -128,7 +128,7 @@ export class AnalysisEditorComponent implements OnInit {
   public saveAnalysis(): any {
     let data = {
       classification: this.analysisClassification,
-      text: btoa(this.analysisText),
+      text: Base64.encode(this.analysisText),
       userId: this.userId,
       relatedIncidents: this.relatedIncidents
     };
