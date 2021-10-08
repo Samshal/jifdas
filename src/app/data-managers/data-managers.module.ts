@@ -26,6 +26,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
+import { IncidenceMapComponent } from './components/incidence-map/incidence-map.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
     DeclineFieldReportComponent,
     ChartsComponent,
     HorizontalTimelineComponent,
-    IncidenceTimelineComponent
+    IncidenceTimelineComponent,
+    IncidenceMapComponent
   ],
   imports: [
     CommonModule,

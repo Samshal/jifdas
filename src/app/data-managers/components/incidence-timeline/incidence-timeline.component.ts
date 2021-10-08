@@ -80,7 +80,10 @@ export class IncidenceTimelineComponent implements OnInit {
 
 	leafletOptions = {
 		layers: [
-			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' })
+			L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+			    maxZoom: 20,
+			    subdomains:['mt0','mt1','mt2','mt3']
+			})
 		],
 		zoom: 5,
 		center: L.latLng(11.0, 6.0)
@@ -125,19 +128,19 @@ export class IncidenceTimelineComponent implements OnInit {
 		});
 
 		
-		this.http.get('assets/data/data.geojson').subscribe((json: any) => {
-	        this.json = json;
-	        L.geoJSON(this.json, {
-	        	pointToLayer: function (feature, latlng) {
-	        		return L.marker(latlng, {icon: shieldIcon});
-			        // return L.circleMarker(latlng, geojsonMarkerOptions);
-			    },
-			    onEachFeature: function(feature, layer) {
-			    	console.log(feature)
-			    	layer.bindPopup("Military location")
-			    }
-	        }).addTo(map);
-	    });
+		// this.http.get('assets/data/data.geojson').subscribe((json: any) => {
+	 //        this.json = json;
+	 //        L.geoJSON(this.json, {
+	 //        	pointToLayer: function (feature, latlng) {
+	 //        		return L.marker(latlng, {icon: shieldIcon});
+		// 	        // return L.circleMarker(latlng, geojsonMarkerOptions);
+		// 	    },
+		// 	    onEachFeature: function(feature, layer) {
+		// 	    	console.log(feature)
+		// 	    	layer.bindPopup("Military location")
+		// 	    }
+	 //        }).addTo(map);
+	 //    });
 
 	    this.eventsLayer = L.geoJSON(this.json, {
         	pointToLayer: ((feature, latlng) => {
