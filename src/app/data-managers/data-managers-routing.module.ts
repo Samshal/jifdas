@@ -6,6 +6,8 @@ import { AuthGuardService } from '../shared/services/auth-guard.service';
 import { ShellComponent } from './components/shell/shell.component';
 import { ViewFieldReportsComponent } from './components/view-field-reports/view-field-reports.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { IncidenceTimelineComponent } from './components/incidence-timeline/incidence-timeline.component';
+
 
 const routes: Routes = [
   {
@@ -20,6 +22,10 @@ const routes: Routes = [
       {
         path: 'charts',
         component: ChartsComponent
+      },
+      {
+        path: 'timeline',
+        component: IncidenceTimelineComponent
       }
     ]
   }

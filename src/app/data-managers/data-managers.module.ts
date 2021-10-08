@@ -19,7 +19,13 @@ import { ChartsComponent } from './components/charts/charts.component';
 
 import { VizComponentsModule } from '../viz-components/viz-components.module';
 
+import { HorizontalTimelineComponent } from './components/horizontal-timeline/horizontal-timeline.component';
+import { IncidenceTimelineComponent } from './components/incidence-timeline/incidence-timeline.component';
+
 import { NgxEchartsModule } from 'ngx-echarts';
+
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 
 @NgModule({
   declarations: [
@@ -28,7 +34,9 @@ import { NgxEchartsModule } from 'ngx-echarts';
     ViewSingleFieldReportComponent,
     EditFieldReportComponent,
     DeclineFieldReportComponent,
-    ChartsComponent
+    ChartsComponent,
+    HorizontalTimelineComponent,
+    IncidenceTimelineComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +48,9 @@ import { NgxEchartsModule } from 'ngx-echarts';
     }),
     NgSelect2Module,
     FormsModule,
-    VizComponentsModule
+    VizComponentsModule,
+    LeafletModule,
+    LeafletDrawModule
   ],
   exports: [
     ViewSingleFieldReportComponent
