@@ -7,8 +7,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-10">
-				<div style="height: 100vh; margin-bottom: 10px;"
+			<div class="col-md-12" style="border: 1px solid #4b5221; border-radius: 25px; margin: 0px !important; padding: 0px !important">
+				<!-- <div style="height: 100vh; margin-bottom: 10px;"
 				     leaflet 
 				     leafletDraw
 				     [leafletOptions]="leafletOptions"
@@ -16,9 +16,15 @@
 				     (leafletDrawCreated)="onDrawCreated($event)"
 				     (leafletMapReady)="onMapReady($event)">
 				     <div [leafletLayer]="drawnItems"></div>
+				</div> -->
+				<div style="height: 100vh; margin: 0px;; border-radius: 25px; margin: 0px !important; "
+				     leaflet 
+				    
+				     [leafletOptions]="leafletOptions"
+				     (leafletMapReady)="onMapReady($event)">
 				</div>
 			</div>
-			<div class="col-md-2" style="overflow-x: hidden; background-color: rgba(255, 255, 255, 0.4); padding-top: 5px;">
+			<div class="col-md-12" style="overflow-x: hidden; background-color: rgba(255, 255, 255, 0.4); padding-top: 5px;">
 				<h6 class="font-weight-semibold text-center">LEGEND</h6>
 				<table>
 					<tr *ngFor="let item of typeColors | keyvalue">

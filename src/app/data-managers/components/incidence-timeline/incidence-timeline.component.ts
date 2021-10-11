@@ -29,9 +29,14 @@ export class IncidenceTimelineComponent implements OnInit {
 			}
 		});
 
-		this.eventsService.getEvent('date-selected').subscribe(response=>{
+		this.eventsService.getEvent('perform-global-search').subscribe(response=>{
 			if (response != null){
-				this.globalDateRange = response;
+				this.globalDateRange = response.dateRange;
+				console.log(this.globalDateRange);
+				if (this.globalDateRange.startDate != "" && typeof this.globalDateRange.startDate.format !== "undefined"){
+		          this.globalDateRange.startDate = this.globalDateRange.startDate.format("YYYY-MM-DD");
+		          this.globalDateRange.endDate = this.globalDateRange.endDate.format("YYYY-MM-DD");
+		        }
 			}
 			setTimeout(()=>{
 				this.loadTimelineDates();
@@ -185,8 +190,8 @@ export class IncidenceTimelineComponent implements OnInit {
 	}
 
 	loadGeoJson(requestData):void {
-		const sDate = moment(requestData.date).format("YYYY-MM-DD");
-		const eDate = sDate;		
+		const sDate = this.globalDateRange.startDate;
+		const eDate = moment(requestData.date).format("YYYY-MM-DD");		
 		this.serverRequest
 		.get("incidents/timeline/get-incidents-geojson?startDate="+sDate+"&endDate="+eDate)
 		.subscribe(response => {
@@ -214,7 +219,7 @@ export class IncidenceTimelineComponent implements OnInit {
 			    }
 	        });
 
-			const html = "<h4>"+moment(sDate).format("DD MMMM, YYYY")+"</h4><h6 class='font-weight-semibold' style='line-height: 0;'>Total Incidences = "+this.json["features"].length +"</h6>"
+			const html = "<h4>"+moment(eDate).format("DD MMMM, YYYY")+"</h4><h6 class='font-weight-semibold' style='line-height: 0;'>Total Incidences = "+this.json["features"].length +"</h6>"
 	        $(".leaflet-control-zoom").html(html);
 
 	        this.map.addLayer(this.eventsLayer);
