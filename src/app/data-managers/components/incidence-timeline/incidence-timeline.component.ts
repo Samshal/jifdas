@@ -71,14 +71,23 @@ export class IncidenceTimelineComponent implements OnInit {
 	}
 
 	getIncidentTypeStyle(feature): any {
-		var geojsonMarkerEventsOptions = {
-		    radius: 5,
-		    fillColor: this.getIncidentTypeColor(feature.properties.type),
-		    color: "#f00",
-		    weight: 0.8,
-		    opacity: 0.9,
-		    fillOpacity: 0.8
-		};
+		if (feature.geometry.type == 'Point'){
+			var geojsonMarkerEventsOptions: any = {
+			    radius: 5,
+			    fillColor: this.getIncidentTypeColor(feature.properties.type),
+			    color: "#f00",
+			    weight: 0.8,
+			    opacity: 0.9,
+			    fillOpacity: 0.8
+			};	
+		}
+		else {
+			var geojsonMarkerEventsOptions: any = {
+			    color: "#ffffff",
+			    weight: 0.3,
+			    fillOpacity: 0
+			};
+		}
 
 		return geojsonMarkerEventsOptions;
 	}
