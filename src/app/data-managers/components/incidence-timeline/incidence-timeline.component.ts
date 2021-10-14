@@ -32,7 +32,6 @@ export class IncidenceTimelineComponent implements OnInit {
 		this.eventsService.getEvent('perform-global-search').subscribe(response=>{
 			if (response != null){
 				this.globalDateRange = response.dateRange;
-				console.log(this.globalDateRange);
 				if (this.globalDateRange.startDate != "" && typeof this.globalDateRange.startDate.format !== "undefined"){
 		          this.globalDateRange.startDate = this.globalDateRange.startDate.format("YYYY-MM-DD");
 		          this.globalDateRange.endDate = this.globalDateRange.endDate.format("YYYY-MM-DD");
@@ -83,8 +82,8 @@ export class IncidenceTimelineComponent implements OnInit {
 		}
 		else {
 			var geojsonMarkerEventsOptions: any = {
-			    color: "#ffffff",
-			    weight: 0.3,
+			    color: "#312df4",
+			    weight: 1,
 			    fillOpacity: 0
 			};
 		}
@@ -208,6 +207,9 @@ export class IncidenceTimelineComponent implements OnInit {
 			this.map.removeLayer(this.eventsLayer);
 
 			this.eventsLayer = L.geoJSON(this.json, {
+				style: ((feature)=>{
+					return this.getIncidentTypeStyle(feature);
+				}),
 	        	pointToLayer:  ((feature, latlng) => {
 	        		let style = this.getIncidentTypeStyle(feature);
 			        return L.circleMarker(latlng, style);

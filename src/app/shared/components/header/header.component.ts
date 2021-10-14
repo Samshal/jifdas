@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
     this.storage.getItem("sessionInfo").subscribe(data => {
       if (data != null){
         this.userInfo = JSON.parse(data);
-        console.log(data);
       }
     })
   }
