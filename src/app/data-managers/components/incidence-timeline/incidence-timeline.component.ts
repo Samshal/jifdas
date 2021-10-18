@@ -7,6 +7,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ServerRequestService } from '../../../shared/services/server-request.service';
 import { EventsService } from '../../../shared/services/events.service';
 
+declare var MarkerClusterGroup: any;
+
+import '../../../../../node_modules/leaflet.markercluster/dist/leaflet.markercluster.js';
+
+import * as screenfull from 'screenfull';
+import '../../../../../node_modules/leaflet.fullscreen/Control.FullScreen.js';
+
+
 @Component({
 	selector: 'app-incidence-timeline',
 	templateUrl: './incidence-timeline.component.html',
@@ -20,9 +28,15 @@ export class IncidenceTimelineComponent implements OnInit {
 	infoText;
 	typeColors: any = {};
 	globalDateRange: any = {"startDate":"", "endDate":""};
+  	markers = L.markerClusterGroup();
+  	overlays: any = {};
+  	layer: any;
+  	markerClusters: any = {};
+
 	constructor(private http: HttpClient, private serverRequest: ServerRequestService, private eventsService: EventsService) { }
 
 	ngOnInit(): void {
+		window.screenfull = screenfull;
 		this.eventsService.getEvent('timeline-element-selected').subscribe(response=>{
 			if (response != null){
 				this.loadGeoJson(response);
@@ -117,8 +131,15 @@ export class IncidenceTimelineComponent implements OnInit {
 			})
 		};
 
-		let layer = L.control.layers(basemaps, {}, {position: 'topleft'});
-		layer.addTo(this.map);
+		let fullscreen = L.control.fullscreen({
+			position: 'topleft'
+		});
+
+		fullscreen.addTo(this.map);
+
+		this.layer = L.control.layers(basemaps, this.overlays, {position: 'topright'});
+		this.layer.addTo(this.map);
+		this.markers.addTo(this.map);
 
 		var geojsonMarkerOptions = {
 		    radius: 8,
@@ -140,21 +161,6 @@ export class IncidenceTimelineComponent implements OnInit {
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 
-		
-		// this.http.get('assets/data/data.geojson').subscribe((json: any) => {
-	 //        this.json = json;
-	 //        L.geoJSON(this.json, {
-	 //        	pointToLayer: function (feature, latlng) {
-	 //        		return L.marker(latlng, {icon: shieldIcon});
-		// 	        // return L.circleMarker(latlng, geojsonMarkerOptions);
-		// 	    },
-		// 	    onEachFeature: function(feature, layer) {
-		// 	    	console.log(feature)
-		// 	    	layer.bindPopup("Military location")
-		// 	    }
-	 //        }).addTo(map);
-	 //    });
-
 	    this.eventsLayer = L.geoJSON(this.json, {
         	pointToLayer: ((feature, latlng) => {
         		let style = this.getIncidentTypeStyle(feature);
@@ -168,11 +174,24 @@ export class IncidenceTimelineComponent implements OnInit {
 		    return this.infoText;
         })
 
-        map.addLayer(this.eventsLayer);
+        map.addLayer(this.eventsLayer);   
+
+        this.map.on('overlayadd', (e)=>{
+        	setTimeout((g)=>{
+        		this.buildMarkerClusters();
+        	}, 1000);
+        });
+        this.map.on('overlayremove', (e)=>{
+        	setTimeout((g)=>{
+        		this.buildMarkerClusters();
+        	}, 1000);
+        }); 
 
 
         this.infoLayer.addTo(map);
     	$(".leaflet-info-bar").addClass("hidden");
+
+    	$(".leaflet-top.leaflet-left").prepend("<div class='leaflet-control-zoom-info' style='padding-left:20px; padding-top:10px;'></div>");
 	}
 
 	timeline: any = [
@@ -206,35 +225,86 @@ export class IncidenceTimelineComponent implements OnInit {
 			this.json = response.contentData;
 			this.map.removeLayer(this.eventsLayer);
 
-			this.eventsLayer = L.geoJSON(this.json, {
-				style: ((feature)=>{
-					return this.getIncidentTypeStyle(feature);
-				}),
-	        	pointToLayer:  ((feature, latlng) => {
-	        		let style = this.getIncidentTypeStyle(feature);
-			        return L.circleMarker(latlng, style);
-			    }),
-			    onEachFeature: function(feature, layer) {
-			    	layer.on({
-			    		click: (e => {
-			    			$(".leaflet-info-bar").removeClass("hidden");
-			    			const _hider = '$(".leaflet-info-bar").addClass("hidden")';
-			    			const hide = "<button class='btn btn-link pull-right text-primary' onclick='"+_hider+"'>&times;<small> close</small></button>";
-			    			const html = "<h1>"+feature.properties.type+" ("+feature.properties.category+")&nbsp;&nbsp;&nbsp;&nbsp;"+hide+"</h1><p>"+feature.properties.title+"</p>"
-			    			$(".leaflet-info-bar").html(html);
-			    		}),
-			    		// mouseout: (e => {
-			    		// 	$(".leaflet-info-bar").addClass("hidden");
-			    		// })
-			    	})
-			    }
-	        });
+	        var features: any = {};
 
-			const html = "<h4>"+moment(eDate).format("DD MMMM, YYYY")+"</h4><h6 class='font-weight-semibold' style='line-height: 0;'>Total Incidences = "+this.json["features"].length +"</h6>"
-	        $(".leaflet-control-zoom").html(html);
+	        for (var i = 0; i < this.json.features.length; i++) {
+		        var feature = this.json.features[i];
+		        var type = feature.properties.type;
+		        if (type in features){
+		        	features[type].push(feature);
+		        }
+		        else {
+		        	features[type] = [feature];
+		        }
+		    }
+
+		    this.layer._layers.splice(3, (this.layer._layers).length-1);
+		    this.markers.clearLayers();
+
+		    for(let index in features){
+		    	const json: any = {features: features[index],type: "FeatureCollection"};
+		    	if (this.overlays[index]){
+		    		delete this.overlays[index];
+		    	}
+		    	this.overlays[index] = L.geoJSON(json, {
+					style: ((feature)=>{
+						return this.getIncidentTypeStyle(feature);
+					}),
+		        	pointToLayer:  ((feature, latlng) => {
+		        		let style = this.getIncidentTypeStyle(feature);
+		        		var marker = L.marker(latlng, { title: feature.properties.type });
+				        marker.bindPopup(feature.properties.type);
+				        this.markers.addLayer(marker);
+				        return L.circleMarker(latlng, style);
+				    }),
+				    onEachFeature: function(feature, layer) {
+				    	layer.on({
+				    		click: (e => {
+				    			$(".leaflet-info-bar").removeClass("hidden");
+				    			const _hider = '$(".leaflet-info-bar").addClass("hidden")';
+				    			const hide = "<button class='btn btn-link pull-right text-primary' onclick='"+_hider+"'>&times;<small> close</small></button>";
+				    			const html = "<h1>"+feature.properties.type+" ("+feature.properties.category+")&nbsp;&nbsp;&nbsp;&nbsp;"+hide+"</h1><p>"+feature.properties.title+"</p>";
+				    			$(".leaflet-info-bar").html(html);
+				    		}),
+				    		// mouseout: (e => {
+				    		// 	$(".leaflet-info-bar").addClass("hidden");
+				    		// })
+				    	})
+				    }
+		        }).addTo(this.map);
+		        this.layer.addOverlay(this.overlays[index], index)
+		    }
+
+			const html = "<h4>"+moment(sDate).format("DD MMMM, YYYY")+" - "+moment(eDate).format("DD MMMM, YYYY")+"</h4>";
+	        $(".leaflet-control-zoom-info").html(html);
 
 	        this.map.addLayer(this.eventsLayer);
 		})
+	}
+
+	buildMarkerClusters(): void {
+		let points = this.layer._layers;
+
+		console.log(this.overlays, this.layer);
+
+		if (typeof this.markers !== "undefined"){
+			this.markers.clearLayers();
+		}
+
+		for (let index = 0; index < points.length; index++){
+			console.log(points[index].name, points[index].layer._map);
+			if (points[index].layer._map !== null){
+				const _layers = points[index].layer._layers;
+				for (let i in _layers){
+					const _layer = _layers[i];
+					if (typeof _layer._latlng !== "undefined"){
+						var marker = L.marker(_layer._latlng, { title: _layer.feature.properties.type });
+				        marker.bindPopup(_layer.feature.properties.type);
+				        this.markers.addLayer(marker);
+					}
+				}
+			}
+		}
 	}
 
 	drawnItems: L.FeatureGroup = L.featureGroup();
