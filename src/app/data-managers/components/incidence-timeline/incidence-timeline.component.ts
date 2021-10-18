@@ -33,6 +33,11 @@ export class IncidenceTimelineComponent implements OnInit {
   	layer: any;
   	markerClusters: any = {};
 
+  	markerIcon = L.icon({
+	    iconUrl: 'assets/media/leaflet-icons/marker-icon.png',
+	    shadowUrl: 'assets/media/leaflet-icons/marker-shadow.png'
+	});
+
 	constructor(private http: HttpClient, private serverRequest: ServerRequestService, private eventsService: EventsService) { }
 
 	ngOnInit(): void {
@@ -252,8 +257,13 @@ export class IncidenceTimelineComponent implements OnInit {
 					}),
 		        	pointToLayer:  ((feature, latlng) => {
 		        		let style = this.getIncidentTypeStyle(feature);
-		        		var marker = L.marker(latlng, { title: feature.properties.type });
-				        marker.bindPopup(feature.properties.type);
+		        		var ellipsis = "";
+		        		if (feature.properties.title.length > 100) {
+		        			ellipsis = "...";
+		        		}
+		        		var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important'>#"+feature.properties.incidentId+": "+feature.properties.type+"</h3><p style='padding:0 !important; margin: 0 !important'>"+feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
+		        		var marker = L.marker(latlng, { title: feature.properties.type, icon: this.markerIcon });
+				        marker.bindPopup(title);
 				        this.markers.addLayer(marker);
 				        return L.circleMarker(latlng, style);
 				    }),
@@ -292,13 +302,12 @@ export class IncidenceTimelineComponent implements OnInit {
 		}
 
 		for (let index = 0; index < points.length; index++){
-			console.log(points[index].name, points[index].layer._map);
 			if (points[index].layer._map !== null){
 				const _layers = points[index].layer._layers;
 				for (let i in _layers){
 					const _layer = _layers[i];
 					if (typeof _layer._latlng !== "undefined"){
-						var marker = L.marker(_layer._latlng, { title: _layer.feature.properties.type });
+						var marker = L.marker(_layer._latlng, { title: _layer.feature.properties.type, icon: this.markerIcon });
 				        marker.bindPopup(_layer.feature.properties.type);
 				        this.markers.addLayer(marker);
 					}
