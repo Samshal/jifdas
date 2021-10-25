@@ -43,6 +43,7 @@
     "leaflet": "^1.7.1",
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "leaflet-draw": "^1.0.4",
+    "leaflet-search": "^3.0.2",
     "leaflet.fullscreen": "^2.0.0",
     "leaflet.markercluster": "^1.5.1",
     "moment": "^2.29.1",

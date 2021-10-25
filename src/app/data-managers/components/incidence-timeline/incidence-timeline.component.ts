@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import  * as L from 'leaflet'; 
 import * as moment from 'moment';
 
+declare var L: any;
+import '../../../../../node_modules/leaflet-search/src/leaflet-search.js';
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { ServerRequestService } from '../../../shared/services/server-request.service';
@@ -160,6 +163,17 @@ export class IncidenceTimelineComponent implements OnInit {
 		this.layer = L.control.layers(basemaps, this.overlays, {position: 'topright'});
 		this.layer.addTo(this.map);
 		this.markers.addTo(this.map);
+
+		this.map.addControl( new L.Control.Search({
+	      url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+	      jsonpParam: 'json_callback',
+	      propertyName: 'display_name',
+	      propertyLoc: ['lat','lon'],
+	      marker: L.circleMarker([0,0],{radius:30}),
+	      autoCollapse: true,
+	      autoType: false,
+	      minLength: 2
+	    }) );
 
 		var geojsonMarkerOptions = {
 		    radius: 8,
