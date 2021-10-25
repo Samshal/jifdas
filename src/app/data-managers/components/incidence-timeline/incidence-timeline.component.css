@@ -5,3 +5,7 @@
   border-radius: 50%;
   display: inline-block;
 }
+
+div::-webkit-scrollbar, ol::-webkit-scrollbar, pre::-webkit-scrollbar, span::-webkit-scrollbar, ul::-webkit-scrollbar {
+  width: 20px;
+}

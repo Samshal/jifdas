@@ -21,7 +21,7 @@
 				     leaflet 
 				    
 				     [leafletOptions]="leafletOptions"
-				     (leafletMapReady)="onMapReady($event)">
+				     (leafletMapReady)="onMapReady($event)" id="mapEl">
 				</div>
 			</div>
 			<div class="col-md-12" style="overflow-x: hidden; background-color: rgba(255, 255, 255, 0.4); padding-top: 5px;">
@@ -36,3 +36,17 @@
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Field Incident Report</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  	<div class="row"><div class="col-md-12">
+    <app-view-single-field-report [incidentDataId]="currentView"></app-view-single-field-report>
+  </div></div>
+  </div>
+</ng-template>

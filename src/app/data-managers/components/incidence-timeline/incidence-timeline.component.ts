@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import  * as L from 'leaflet'; 
 import * as moment from 'moment';
 
@@ -14,6 +14,8 @@ import '../../../../../node_modules/leaflet.markercluster/dist/leaflet.markerclu
 import * as screenfull from 'screenfull';
 import '../../../../../node_modules/leaflet.fullscreen/Control.FullScreen.js';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
 	selector: 'app-incidence-timeline',
@@ -21,6 +23,8 @@ import '../../../../../node_modules/leaflet.fullscreen/Control.FullScreen.js';
 	styleUrls: ['./incidence-timeline.component.css']
 })
 export class IncidenceTimelineComponent implements OnInit {
+	@ViewChild('content') content: any;
+
 	map;
 	json;
 	eventsLayer;
@@ -38,7 +42,11 @@ export class IncidenceTimelineComponent implements OnInit {
 	    shadowUrl: 'assets/media/leaflet-icons/marker-shadow.png'
 	});
 
-	constructor(private http: HttpClient, private serverRequest: ServerRequestService, private eventsService: EventsService) { }
+	currentView: any = {};
+	modalRef: any;
+
+	constructor(private http: HttpClient, private serverRequest: ServerRequestService, 
+		private eventsService: EventsService, private modalService: NgbModal) { }
 
 	ngOnInit(): void {
 		window.screenfull = screenfull;
@@ -59,6 +67,13 @@ export class IncidenceTimelineComponent implements OnInit {
 			setTimeout(()=>{
 				this.loadTimelineDates();
 			}, 500);
+		});
+
+		$(document).on('click', $(".incident-caller").find('a').eq(0), (e) =>{
+		  if (typeof $(e.target).attr("incident") !== "undefined"){
+		  	const incidentId = $(e.target).attr("incident");
+		  	this.viewIncident(incidentId);
+		  }
 		});
 	}
 
@@ -261,7 +276,7 @@ export class IncidenceTimelineComponent implements OnInit {
 		        		if (feature.properties.title.length > 100) {
 		        			ellipsis = "...";
 		        		}
-		        		var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important'>#"+feature.properties.incidentId+": "+feature.properties.type+"</h3><p style='padding:0 !important; margin: 0 !important'>"+feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
+		        		var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important' class='incident-caller'><a class='btn' incident='"+feature.properties.incidentId+"'>#"+feature.properties.incidentId+": "+feature.properties.type+"</a></h3><p style='padding:0 !important; margin: 0 !important'>"+feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
 		        		var marker = L.marker(latlng, { title: feature.properties.type, icon: this.markerIcon });
 				        marker.bindPopup(title);
 				        this.markers.addLayer(marker);
@@ -307,8 +322,13 @@ export class IncidenceTimelineComponent implements OnInit {
 				for (let i in _layers){
 					const _layer = _layers[i];
 					if (typeof _layer._latlng !== "undefined"){
+		        		var ellipsis = "";
+		        		if (_layer.feature.properties.title.length > 100) {
+		        			ellipsis = "...";
+		        		}
 						var marker = L.marker(_layer._latlng, { title: _layer.feature.properties.type, icon: this.markerIcon });
-				        marker.bindPopup(_layer.feature.properties.type);
+						var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important'>#"+_layer.feature.properties.incidentId+": "+_layer.feature.properties.type+"</h3><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
+				        marker.bindPopup(title);
 				        this.markers.addLayer(marker);
 					}
 				}
@@ -359,5 +379,10 @@ export class IncidenceTimelineComponent implements OnInit {
 		}
 		else if (type == 'polyline') {
 		}
+	}
+
+	viewIncident(id: any): void {
+		this.currentView = id;
+    	this.modalRef = this.modalService.open(this.content, {backdrop: false, backdropClass: 'modal-backdrop', size: 'lg', scrollable: true, container: "#mapEl"});
 	}
 }
