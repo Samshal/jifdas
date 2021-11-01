@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,9 @@ export class ServerRequestService {
 
   // private serverUrlEndpoint = 'http://172.16.70.33:6789/v1/';  // URL to web api
   // private serverUrlEndpoint = 'http://localhost:6789/v1/';  // URL to web api
-  private serverUrlEndpoint = 'http://172.16.70.4:6789/v1/';  // URL to web api
+  // private serverUrlEndpoint = 'http://172.16.70.4:6789/v1/';  // URL to web api
   // private serverUrlEndpoint = 'https://f410-41-73-6-110.ngrok.io/v1/';  // URL to web api
+  private serverUrlEndpoint = environment.serverUrlEndpoint;
   private headers = {};
   constructor(private http: HttpClient) { 
   }

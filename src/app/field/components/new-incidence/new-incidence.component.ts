@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Observable, OperatorFunction} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
-import  * as L from 'leaflet'; 
+import  * as L from 'leaflet';
+import '../../../../../node_modules/leaflet-search/src/leaflet-search.js';
+import * as screenfull from 'screenfull';
+import '../../../../../node_modules/leaflet.fullscreen/Control.FullScreen.js';
+
 import imageToBase64 from 'image-to-base64/browser';
 
 import { ToastService } from '../../../shared/services/toast.service';
@@ -20,11 +24,19 @@ export class NewIncidenceComponent implements OnInit {
   map: any;
   marker: any;
   userId: any;
+  pin: any;
+
+  markerIcon = L.icon({
+      iconUrl: 'assets/media/leaflet-icons/marker-icon.png',
+      shadowUrl: 'assets/media/leaflet-icons/marker-shadow.png'
+  });
+
   public functions;
   constructor(private serverRequest: ServerRequestService, private toastService: ToastService, private storage: StorageService) { 
   }
 
   ngOnInit(): void {
+    window.screenfull = screenfull;
     this.storage.getItem("sessionInfo").subscribe((data)=> {
       data = JSON.parse(data);
       this.userId = data.userId;
@@ -75,7 +87,7 @@ export class NewIncidenceComponent implements OnInit {
 
   leafletOptions = {
     layers: [
-      L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { maxZoom: 20, attribution: '...', "subdomains":['mt0', 'mt1', 'mt2', 'mt3'] })
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' })
     ],
     zoom: 5,
     center: L.latLng(11.0, 6.0)
@@ -251,28 +263,80 @@ export class NewIncidenceComponent implements OnInit {
       userId: this.userId,
       incidentData: incidentData
     };
+
+    if (this.formData.incidentTitle !== ""){
+      this.serverRequest.post("incidents/incident/new-raw-data", payload).subscribe(res => {
+        this.toastService.show("Incidence has been reported successfully", { classname: 'bg-success text-white', delay: 10000 });
+        // Swal.fire('Operation Successful', 'Incidence has been saved successfully', 'success');
+        this.initFormData();
+      }, err => {
+        this.toastService.show("An error occurred. Incidence record not reported successfully", { classname: 'bg-danger text-white', delay: 10000 });
+        // Swal.fire("An error occurred", "Incidence record not saved", "error");
+      });   
+    }
     
-    this.serverRequest.post("incidents/incident/new-raw-data", payload).subscribe(res => {
-      this.toastService.show("Incidence has been reported successfully", { classname: 'bg-success text-white', delay: 10000 });
-      // Swal.fire('Operation Successful', 'Incidence has been saved successfully', 'success');
-      this.initFormData();
-    }, err => {
-      this.toastService.show("An error occurred. Incidence record not reported successfully", { classname: 'bg-danger text-white', delay: 10000 });
-      // Swal.fire("An error occurred", "Incidence record not saved", "error");
-    });   
+    
   }
 
   onMapReady(map: L.Map): void {
     this.map = map;
     this.marker = L.marker([-10,-10], {
-      icon: L.icon({
-        iconSize: [ 25, 41 ],
-        iconAnchor: [ 13, 41 ],
-        iconUrl: 'assets/marker-icon.png',
-        shadowUrl: 'assets/marker-shadow.png'
-      })
+      riseOnHover:true,draggable:true,
+      icon: this.markerIcon
     });
+
     this.marker.addTo(map);
+
+    let fullscreen = L.control.fullscreen();
+
+    fullscreen.addTo(this.map);
+
+    this.map.addControl( L.control.search({
+        url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+        jsonpParam: 'json_callback',
+        propertyName: 'display_name',
+        propertyLoc: ['lat','lon'],
+        marker: L.circleMarker([0,0],{radius:5}),
+        autoCollapse: true,
+        autoType: false,
+        minLength: 2
+      }) );
+
+
+    let basemaps = {
+      "Default Map": L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
+      "Street Map": L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+      }),
+      "Aerial View": L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+      })
+    };
+    const layer = L.control.layers(basemaps, {}, {position: 'topright'});
+    layer.addTo(this.map);
+
+    this.map.on('click', (ev)=> {
+      this.formData.poiLatitude = ev.latlng.lat;
+      this.formData.poiLongitude = ev.latlng.lng;
+      if (typeof this.marker == "object") {
+        this.marker.setLatLng(ev.latlng);
+      }
+      else {
+        this.marker = L.marker(ev.latlng,{ riseOnHover:true,draggable:true, icon: this.markerIcon });
+        this.marker.addTo(this.map);
+        this.marker.on('drag',(ev) => {
+          this.formData.poiLatitude = ev.latlng.lat;
+          this.formData.poiLongitude = ev.latlng.lng;
+        });
+      }
+    });
+
+    this.marker.on('drag',(ev) => {
+      this.formData.poiLatitude = ev.latlng.lat;
+      this.formData.poiLongitude = ev.latlng.lng;
+    });
   }
 
   updatePoi(): void {
