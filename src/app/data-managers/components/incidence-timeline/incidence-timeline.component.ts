@@ -127,6 +127,27 @@ export class IncidenceTimelineComponent implements OnInit {
 		return geojsonMarkerEventsOptions;
 	}
 
+	getPolygonTypeStyle(feature): any {
+		const operations: any = {
+			"OPERATION AWATSE":"#9812db",
+			"OPERATION CALM WATERS":"#52b5e2",
+			"OPERATION DELTA SAFE":"#13ca0f",
+			"OPERATION HADARIN DAJI":"#d46539",
+			"OPERATION HADIN KAI":"#f01532",
+			"OPERATION SAFE HAVEN":"#e8206d",
+			"OPERATION THUNDER STRIKE":"#d3cc44",
+			"OPERATION WHIRL STROKE":"#1f70e8"
+		}
+
+		var geojsonMarkerEventsOptions: any = {
+		    color: operations[feature.properties["Operation"]],
+		    weight: 1,
+		    fillOpacity: 0.2
+		};
+
+		return geojsonMarkerEventsOptions;
+	}
+
 	leafletOptions = {
 		layers: [
 			L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
@@ -159,9 +180,23 @@ export class IncidenceTimelineComponent implements OnInit {
 
 		fullscreen.addTo(this.map);
 
+
 		this.layer = L.control.layers(basemaps, this.overlays, {position: 'topright'});
 		this.layer.addTo(this.map);
 		this.markers.addTo(this.map);
+
+		this.http.get('assets/data/nga_ops.geojson').subscribe((json: any) => {
+	        this.json = json;
+	        this.overlays["DHQ Operations"] = L.geoJSON(this.json, {
+				style: ((feature)=>{
+					return this.getPolygonTypeStyle(feature);
+				}),
+			    onEachFeature: function(feature, layer) {
+			    	layer.bindPopup(feature.properties["Operation"]+" ("+feature.properties["ADM1_EN"]+")");
+			    }
+	        }).addTo(map);
+	        this.layer.addOverlay(this.overlays["DHQ Operations"], "DHQ Operations");
+	    });
 
 		this.map.addControl( L.control.search({
 	      url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
@@ -271,7 +306,11 @@ export class IncidenceTimelineComponent implements OnInit {
 		        }
 		    }
 
-		    this.layer._layers.splice(3, (this.layer._layers).length-1);
+		    for (let key in this.overlays){
+		    	this.map.removeLayer(this.overlays[key]);
+		    }
+
+		    this.layer._layers.splice(4, (this.layer._layers).length-1);
 		    this.markers.clearLayers();
 
 		    for(let index in features){
@@ -313,7 +352,7 @@ export class IncidenceTimelineComponent implements OnInit {
 		        this.layer.addOverlay(this.overlays[index], index)
 		    }
 
-			const html = "<h4>"+moment(sDate).format("DD MMMM, YYYY")+" - "+moment(eDate).format("DD MMMM, YYYY")+"</h4>";
+			const html = "<h4>"+moment(sDate).format("DD MMMM, YYYY")+" - "+moment(eDate).format("DD MMMM, YYYY")+" ("+this.json.features.length+" incidents)</h4>";
 	        $(".leaflet-control-zoom-info").html(html);
 
 	        this.map.addLayer(this.eventsLayer);
@@ -322,8 +361,6 @@ export class IncidenceTimelineComponent implements OnInit {
 
 	buildMarkerClusters(): void {
 		let points = this.layer._layers;
-
-		console.log(this.overlays, this.layer);
 
 		if (typeof this.markers !== "undefined"){
 			this.markers.clearLayers();
@@ -340,7 +377,8 @@ export class IncidenceTimelineComponent implements OnInit {
 		        			ellipsis = "...";
 		        		}
 						var marker = L.marker(_layer._latlng, { title: _layer.feature.properties.type, icon: this.markerIcon });
-						var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important'>#"+_layer.feature.properties.incidentId+": "+_layer.feature.properties.type+"</h3><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
+		        		var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important' class='incident-caller'><a class='btn' incident='"+_layer.feature.properties.incidentId+"'>#"+_layer.feature.properties.incidentId+": "+_layer.feature.properties.type+"</a></h3><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
+						// var title = "<div style='text-align: left !important'><h3 style='margin: 0 !important'>#"+_layer.feature.properties.incidentId+": "+_layer.feature.properties.type+"</h3><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.date+"</p><p style='padding:0 !important; margin: 0 !important'>"+_layer.feature.properties.title.substr(0, 100)+ellipsis+"</p></div>";
 				        marker.bindPopup(title);
 				        this.markers.addLayer(marker);
 					}
