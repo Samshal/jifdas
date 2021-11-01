@@ -135,7 +135,7 @@ export class IncidenceTimelineComponent implements OnInit {
 			"OPERATION HADARIN DAJI":"#d46539",
 			"OPERATION HADIN KAI":"#f01532",
 			"OPERATION SAFE HAVEN":"#e8206d",
-			"OPERATION THUNDER STRIKE":"#d3cc44",
+			"OPERATION THUNDER STRIKE":"#3213cf",
 			"OPERATION WHIRL STROKE":"#1f70e8"
 		}
 
@@ -163,7 +163,7 @@ export class IncidenceTimelineComponent implements OnInit {
 		this.map = map;
 
 		let basemaps = {
-			"Default Map": L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
+			"Default Map": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20, attribution: '...' }),
 			"Street Map": L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
 			    maxZoom: 20,
 			    subdomains:['mt0','mt1','mt2','mt3']
@@ -171,7 +171,9 @@ export class IncidenceTimelineComponent implements OnInit {
 			"Aerial View": L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
 			    maxZoom: 20,
 			    subdomains:['mt0','mt1','mt2','mt3']
-			})
+			}),
+			"Satellite View": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20, attribution: '...' }),
+			
 		};
 
 		let fullscreen = L.control.fullscreen({
@@ -310,7 +312,7 @@ export class IncidenceTimelineComponent implements OnInit {
 		    	this.map.removeLayer(this.overlays[key]);
 		    }
 
-		    this.layer._layers.splice(4, (this.layer._layers).length-1);
+		    this.layer._layers.splice(5, (this.layer._layers).length-1);
 		    this.markers.clearLayers();
 
 		    for(let index in features){
