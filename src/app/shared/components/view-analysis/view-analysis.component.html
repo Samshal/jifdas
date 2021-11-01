@@ -44,7 +44,7 @@
                         	<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
                         		<span class="text-muted">#{{record.GeneralAnalysisId}}:</span> {{record.ClassificationName}}
                         	</span>
-                        	<div class=" wrap-text" [innerHtml]="record.AnalysisText"></div>
+                        	<div class="wrap-text small-text" [innerHtml]="preprocess(record.AnalysisText)"></div>
                         </td>
     					<td (click)="openAnalysis(record)">
     						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.AccountName}}</span>

@@ -19,6 +19,8 @@ import { ViewIncidentsComponent } from './components/view-incidents/view-inciden
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.component';
 import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
+import { FieldReportsComponent } from './components/field-reports/field-reports.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AnalysisWorkspaceComponent } from './components/analysis-workspace/anal
     ViewIncidentsComponent,
     ShellComponent,
     ViewAnalysisComponent,
-    AnalysisWorkspaceComponent
+    AnalysisWorkspaceComponent,
+    FieldReportsComponent,
+    ChartsComponent
   ],
   imports: [
     CommonModule,

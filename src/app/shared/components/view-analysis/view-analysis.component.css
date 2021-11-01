@@ -30,7 +30,11 @@
 }
 
 .wrap-text {
-  max-height: 60px;
+  max-height: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.small-text > h1 {
+	font-size:  0.5em !important;
 }

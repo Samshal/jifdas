@@ -7,6 +7,7 @@ import { ShellComponent } from './components/shell/shell.component';
 import { ViewIncidentsComponent } from './components/view-incidents/view-incidents.component';
 import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.component';
 import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,11 @@ const routes: Routes = [
       {
         path: 'analysis-workspace',
         component: AnalysisWorkspaceComponent
-      }
+      },
+      {
+        path: 'charts',
+        component: ChartsComponent
+      },
     ]
   }
 ];

@@ -6,26 +6,10 @@
 	</div>
 	<div class="aside-nav d-flex flex-column align-lg-center flex-column-fluid w-100 pt-5 pt-lg-0" id="kt_aside_nav">
 		<div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold fs-6" data-kt-menu="true">
-			<div class="menu-item py-2">
-				<a class="menu-link menu-center" [routerLink]="['field/new-incidence']" title="Dashboard" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+			<div class="menu-item py-2" *ngFor="let url of urls[module]; let index=index">
+				<a class="menu-link menu-center" [routerLink]="[url.link]" title="{{url.title}}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
 					<span class="menu-icon me-0">
-						<i class="bi bi-house fs-2"></i>
-					</span>
-				</a>
-			</div>
-
-			<div class="menu-item py-2">
-				<a class="menu-link menu-center active" [routerLink]="['field/new-incidence']" title="New Incidence Report" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-					<span class="menu-icon me-0">
-						<i class="bi bi-file-text fs-2"></i>
-					</span>
-				</a>
-			</div>
-
-			<div class="menu-item py-2">
-				<a class="menu-link menu-center" href="data-office/charts" title="Charts" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-					<span class="menu-icon me-0">
-						<i class="bi bi-bar-chart fs-2"></i>
+						<i class="{{url.icon}}"></i>
 					</span>
 				</a>
 			</div>

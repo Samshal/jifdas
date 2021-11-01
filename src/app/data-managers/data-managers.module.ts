@@ -55,7 +55,8 @@ import { IncidenceMapComponent } from './components/incidence-map/incidence-map.
     LeafletDrawModule
   ],
   exports: [
-    ViewSingleFieldReportComponent
+    ViewSingleFieldReportComponent,
+    ChartsComponent
   ]
 })
 export class DataManagersModule { }

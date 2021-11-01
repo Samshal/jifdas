@@ -154,4 +154,8 @@ export class ViewAnalysisComponent implements AfterViewInit, OnDestroy, OnInit {
       this.broadcastanalysisSelect();
     }
   }
+
+  preprocess(text: any){
+    return text.replace("h1", "p");
+  }
 }
