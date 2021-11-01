@@ -172,8 +172,11 @@ export class IncidenceTimelineComponent implements OnInit {
 			    maxZoom: 20,
 			    subdomains:['mt0','mt1','mt2','mt3']
 			}),
+			"Topo Map": L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+				maxZoom: 17,
+				attribution: '...'
+			}),
 			"Satellite View": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20, attribution: '...' }),
-			
 		};
 
 		let fullscreen = L.control.fullscreen({
@@ -312,7 +315,7 @@ export class IncidenceTimelineComponent implements OnInit {
 		    	this.map.removeLayer(this.overlays[key]);
 		    }
 
-		    this.layer._layers.splice(5, (this.layer._layers).length-1);
+		    this.layer._layers.splice(6, (this.layer._layers).length-1);
 		    this.markers.clearLayers();
 
 		    for(let index in features){
