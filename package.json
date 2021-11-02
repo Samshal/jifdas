@@ -23,6 +23,7 @@
     "@asymmetrik/ngx-leaflet-draw": "^7.0.0",
     "@ckeditor/ckeditor5-angular": "^2.0.2",
     "@ckeditor/ckeditor5-build-decoupled-document": "^29.2.0",
+    "@ckeditor/ckeditor5-upload": "^31.0.0",
     "@editorjs/editorjs": "^2.22.2",
     "@juggle/resize-observer": "^3.3.1",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",

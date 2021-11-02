@@ -45,6 +45,8 @@ export class AnalysisEditorComponent implements OnInit {
       this.userId = data.userId;
     });
 
+    console.log(DocumentEditor.builtinPlugins);
+
     this.config = {
         placeholder: 'Type your analysis here!',
         toolbar: DocumentEditor.builtinPlugins.map( plugin => plugin.pluginName ),
