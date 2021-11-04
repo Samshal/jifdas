@@ -117,6 +117,8 @@
 								<option value=""></option>
 								<option value="bar-chart">Bar Chart</option>
 								<option value="pie-chart">Pie Chart</option>
+								<option value="time-series">Time Series</option>
+								<!-- <option value="calendar-heatmap">Calendar Heatmap</option> -->
 								<option value="map">Map</option>
 							</select>
 						</div>
@@ -135,6 +137,12 @@
 				</div>
 				<div class="col-md-12" *ngIf="requiredChartType == 'pie-chart' && !requestingData">
 					<app-pie-chart [categoriesData]="chartData"></app-pie-chart>
+				</div>
+				<div class="col-md-12" *ngIf="requiredChartType == 'time-series' && !requestingData">
+					<app-time-series [categoriesData]="chartData"></app-time-series>
+				</div>
+				<div class="col-md-12" *ngIf="requiredChartType == 'calendar-heatmap' && !requestingData">
+					<app-calendar-heatmap [categoriesData]="chartData"></app-calendar-heatmap>
 				</div>
 				<div class="col-md-12" *ngIf="requiredChartType == 'map' && !requestingData">
 					<app-incidence-timeline></app-incidence-timeline>

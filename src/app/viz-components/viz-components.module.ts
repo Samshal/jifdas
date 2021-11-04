@@ -8,11 +8,13 @@ import { IncidencesByStateComponent } from './incidences-by-state/incidences-by-
 import { IncidencesByRegionBreakdownComponent } from './incidences-by-region-breakdown/incidences-by-region-breakdown.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { CalendarHeatmapComponent } from './calendar-heatmap/calendar-heatmap.component';
+import { TimeSeriesComponent } from './time-series/time-series.component';
 // import { IncidencesMapComponent } from './incidences-map/incidences-map.component';
 
 @NgModule({
   declarations: [IncidencesByRegionComponent,
-   IncidencesByStateComponent, IncidencesByRegionBreakdownComponent, BarChartComponent, PieChartComponent],
+   IncidencesByStateComponent, IncidencesByRegionBreakdownComponent, BarChartComponent, PieChartComponent, CalendarHeatmapComponent, TimeSeriesComponent],
   imports: [
     CommonModule,
     NgxEchartsModule.forRoot({
@@ -24,7 +26,9 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     IncidencesByStateComponent,
     IncidencesByRegionBreakdownComponent,
     BarChartComponent,
-    PieChartComponent
+    PieChartComponent,
+    CalendarHeatmapComponent,
+    TimeSeriesComponent
     // IncidencesMapComponent
   ]
 })
