@@ -28,6 +28,7 @@
     "@juggle/resize-observer": "^3.3.1",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@swimlane/ngx-datatable": "^20.0.0",
+    "@types/hammerjs": "^2.0.40",
     "@types/leaflet-draw": "^1.0.5",
     "angular-d3-cloud": "^1.1.1",
     "angular-datatables": "^12.0.0",
@@ -42,6 +43,7 @@
     "image-to-base64": "^2.2.0",
     "js-base64": "^3.7.2",
     "jszip": "^3.7.1",
+    "keycharm": "^0.4.0",
     "leaflet": "^1.7.1",
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "leaflet-draw": "^1.0.4",
@@ -52,16 +54,21 @@
     "ng-select2": "^1.2.7",
     "ngx-daterangepicker-material": "^5.0.1",
     "ngx-echarts": "^7.0.2",
+    "ngx-vis": "^3.1.0",
     "rxjs": "~6.6.0",
     "screenfull": "^5.1.0",
     "select2": "^4.1.0-rc.0",
     "tslib": "^2.1.0",
+    "vis-data": "^7.1.2",
+    "vis-network": "^9.1.0",
+    "vis-util": "^5.0.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.0.2",
     "@angular/cli": "~12.0.2",
     "@angular/compiler-cli": "~12.0.2",
+    "@egjs/hammerjs": "^2.0.17",
     "@types/bootstrap": "^5.1.1",
     "@types/datatables.net": "^1.10.20",
     "@types/datatables.net-buttons": "^1.4.7",
@@ -70,6 +77,7 @@
     "@types/jquery": "^3.5.6",
     "@types/leaflet": "^1.7.5",
     "@types/node": "^12.11.1",
+    "@types/vis": "^4.21.22",
     "angular-cli-ghpages": "^1.0.0-rc.2",
     "bootstrap": "^5.1.0",
     "jasmine-core": "~3.7.0",
@@ -79,6 +87,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "typescript": "~4.2.3"
+    "typescript": "~4.2.3",
+    "xss": "^1.0.10"
   }
 }

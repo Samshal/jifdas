@@ -21,6 +21,9 @@ import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.
 import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
 import { FieldReportsComponent } from './components/field-reports/field-reports.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { NetworkGraphComponent } from './components/network-graph/network-graph.component';
+
+import { VisModule } from 'ngx-vis';
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import { ChartsComponent } from './components/charts/charts.component';
     ViewAnalysisComponent,
     AnalysisWorkspaceComponent,
     FieldReportsComponent,
-    ChartsComponent
+    ChartsComponent,
+    NetworkGraphComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,8 @@ import { ChartsComponent } from './components/charts/charts.component';
     DataManagersModule,
     CKEditorModule,
     NgxDatatableModule,
-    FormsModule
+    FormsModule,
+    VisModule
   ]
 })
 export class AnalystsModule { }

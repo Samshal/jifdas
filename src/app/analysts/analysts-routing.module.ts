@@ -8,6 +8,7 @@ import { ViewIncidentsComponent } from './components/view-incidents/view-inciden
 import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.component';
 import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { NetworkGraphComponent } from './components/network-graph/network-graph.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'charts',
         component: ChartsComponent
+      },
+      {
+        path: 'networks',
+        component: NetworkGraphComponent
       },
     ]
   }
