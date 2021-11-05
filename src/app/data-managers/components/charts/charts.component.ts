@@ -200,6 +200,10 @@ export class ChartsComponent implements OnInit {
       url = "incidents/stats/load-by-incident-types";
     }
 
+    if (this.requiredChartType == "word-cloud"){
+      url = "incidents/stats/get-word-cloud";
+    }
+
     this.serverRequest
     .post(url, reqData)
     .subscribe(response => {

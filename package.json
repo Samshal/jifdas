@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@swimlane/ngx-datatable": "^20.0.0",
     "@types/leaflet-draw": "^1.0.5",
+    "angular-d3-cloud": "^1.1.1",
     "angular-datatables": "^12.0.0",
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^4.5.0",
