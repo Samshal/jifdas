@@ -3,7 +3,8 @@
     <div class="content">
       <div class="row">
 			<div class="col-md-12" *ngIf="timeline.length > 0">
-				<horizontal-timeline [timelineElements]="timeline" [showContent]="false" [dateFormat]="'dd MMM, yyyy'"></horizontal-timeline>
+				<!-- <horizontal-timeline [timelineElements]="timeline" [showContent]="false" [dateFormat]="'dd MMM, yyyy'"></horizontal-timeline> -->
+				<app-range-slider [timelineElements]="timeline" id="timelineSlider"></app-range-slider>
 			</div>
 		</div>
 		<div class="row">

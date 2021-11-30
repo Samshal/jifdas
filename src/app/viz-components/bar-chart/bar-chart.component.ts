@@ -84,7 +84,16 @@ export class BarChartComponent implements OnInit {
           emphasis: {
             focus: "series"
           },
-          data: Object.values(val)
+          data: Object.values(val),
+          itemStyle: {
+            normal: {
+              label: {
+                show: true,
+                position: "top",
+                offset: [0, -2],
+              }
+            }
+          }
         };
         series.push(seriesTpl);
       }
@@ -97,11 +106,11 @@ export class BarChartComponent implements OnInit {
         xAxis:{
           data: this.categoriesData.values
         },
-          yAxis: [
-              {
-                  type: 'value'
-              }
-          ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
         tooltip: {
           trigger: "axis",
           axisPointer: {

@@ -18,6 +18,7 @@ import '../../../../../node_modules/leaflet.fullscreen/Control.FullScreen.js';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+// declare const L: any;
 
 @Component({
 	selector: 'app-incidence-timeline',
@@ -290,8 +291,12 @@ export class IncidenceTimelineComponent implements OnInit {
 	}
 
 	loadGeoJson(requestData):void {
-		const sDate = this.globalDateRange.startDate;
-		const eDate = moment(requestData.date).format("YYYY-MM-DD");		
+		let sDate = this.globalDateRange.startDate;
+		if (typeof requestData.startDate !== "undefined"){
+			sDate = moment(requestData.startDate).format("YYYY-MM-DD");
+		}
+
+		const eDate = moment(requestData.endDate).format("YYYY-MM-DD");		
 		this.serverRequest
 		.get("incidents/timeline/get-incidents-geojson?startDate="+sDate+"&endDate="+eDate)
 		.subscribe(response => {
@@ -389,51 +394,6 @@ export class IncidenceTimelineComponent implements OnInit {
 					}
 				}
 			}
-		}
-	}
-
-	drawnItems: L.FeatureGroup = L.featureGroup();
-
-	drawOptions: any = {
-		draw: {
-			position: "topleft",
-			// marker: {
-			// 	icon: L.icon({
-			// 		iconSize: [ 25, 41 ],
-			// 		iconAnchor: [ 13, 41 ],
-			// 		iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
-			// 		iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
-			// 		shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
-			// 	})
-			// },
-			// polyline: false,
-			circle: {
-				shapeOptions: {
-					color: '#d4af37'
-				}
-			},
-			rectangle: false,
-			polygon: false,
-			marker: false,
-			circlemarker: false
-		},
-		edit: {
-			featureGroup: this.drawnItems,
-			edit: false
-		}
-	};
-
-	public onDrawCreated(e: any) {
-		var type = e.layerType;
-		if (type == 'circle') {
-			var theRadius = e.layer.getRadius();		
-			this.drawnItems.addLayer((e as L.DrawEvents.Created).layer);
-			this.drawnItems.bringToBack();
-
-			this.drawnItems.bindPopup("Radius: "+ (Math.round((theRadius/1000)*100)/100) + " KM");
-			this.drawnItems.openPopup();
-		}
-		else if (type == 'polyline') {
 		}
 	}
 

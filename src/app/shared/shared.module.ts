@@ -26,6 +26,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ViewAnalysisComponent } from './components/view-analysis/view-analysis.component';
 import { ViewSingleAnalysisComponent } from './components/view-single-analysis/view-single-analysis.component';
 import { AnalysisWorkspaceComponent } from './components/analysis-workspace/analysis-workspace.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { RangeSliderComponent } from './components/range-slider/range-slider.component';
+
+import { NgxSliderModule } from '@angular-slider/ngx-slider'
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ import { AnalysisWorkspaceComponent } from './components/analysis-workspace/anal
     AnalysisEditorComponent,
     ViewAnalysisComponent,
     ViewSingleAnalysisComponent,
-    AnalysisWorkspaceComponent
+    AnalysisWorkspaceComponent,
+    FilterPipe,
+    RangeSliderComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +55,7 @@ import { AnalysisWorkspaceComponent } from './components/analysis-workspace/anal
     FormsModule,
     DataTablesModule,
     NgxDatatableModule,
+    NgxSliderModule,
   ],
   providers: [
     AuthGuardService
@@ -62,7 +69,9 @@ import { AnalysisWorkspaceComponent } from './components/analysis-workspace/anal
     AnalysisEditorComponent,
     ViewAnalysisComponent,
     ViewSingleAnalysisComponent,
-    AnalysisWorkspaceComponent
+    AnalysisWorkspaceComponent,
+    FilterPipe,
+    RangeSliderComponent
   ]
 })
 export class SharedModule { }

@@ -185,9 +185,10 @@
   		<div class="col-md-3">
 			<div class="mb-5">
 				<label class="fs-6 form-label fw-bolder text-dark">COUNTRY</label>
+				<input class="form-control" placeholder="filter" [(ngModel)]="locationFilter.country">
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.country; let index=index">
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.country | filter: locationFilter.country; let index=index">
 					<input class="form-check-input" type="checkbox" id="loc_search_country_{{index}}" name="loc_search_country_{{index}}" [(ngModel)]="selectedLocations.country[loc]"/>
 					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_country_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
@@ -196,9 +197,10 @@
   		<div class="col-md-3">
 			<div class="mb-5">
 				<label class="fs-6 form-label fw-bolder text-dark">REGION</label>
+				<input class="form-control" placeholder="filter" [(ngModel)]="locationFilter.region">
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.region; let index=index">
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.region | filter: locationFilter.region; let index=index">
 					<input class="form-check-input" type="checkbox" id="loc_search_region_{{index}}" name="loc_search_region_{{index}}" [(ngModel)]="selectedLocations.region[loc]" />
 					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_region_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
@@ -207,9 +209,10 @@
   		<div class="col-md-3">
 			<div class="mb-5">
 				<label class="fs-6 form-label fw-bolder text-dark">STATE</label>
+				<input class="form-control" placeholder="filter" [(ngModel)]="locationFilter.state">
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.state; let index=index">
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.state | filter: locationFilter.state; let index=index">
 					<input class="form-check-input" type="checkbox" id="loc_search_state_{{index}}" name="loc_search_state_{{index}}" [(ngModel)]="selectedLocations.state[loc]"/>
 					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_state_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
@@ -218,9 +221,10 @@
   		<div class="col-md-3">
 			<div class="mb-5">
 				<label class="fs-6 form-label fw-bolder text-dark">LGA</label>
+				<input class="form-control" placeholder="filter" [(ngModel)]="locationFilter.lga">
 			</div>
 			<div class="mb-1">
-				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.lga; let index=index">
+				<div class="form-check form-check-custom form-check-solid mb-5" *ngFor="let loc of searchedLocations.lga | filter: locationFilter.lga; let index=index">
 					<input class="form-check-input" type="checkbox" id="loc_search_lga_{{index}}" name="loc_search_lga_{{index}}" [(ngModel)]="selectedLocations.lga[loc]"/>
 					<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="loc_search_lga_{{index}}" style="padding-left: 20px;">{{loc}}</label>
 				</div>
@@ -241,6 +245,9 @@
     </button>
   </div>
   <div class="modal-body">
+  	<div class="row">
+				<input class="form-control" placeholder="filter" [(ngModel)]="eventFilter.meta">
+  	</div>
   	<!--begin::Accordion-->
 	<div class="accordion accordion-icon-toggle" id="kt_accordion_metadata">
 	    <div class="mb-5" *ngFor="let metadata of metadataList | keyvalue; let index=index">
@@ -248,12 +255,12 @@
 	        <div class="accordion-header py-3 d-flex" data-bs-toggle="collapse" [attr.data-bs-target]="'#kt_accordion_metadata_item_'+index">
 	            <span class="accordion-icon">
 	            	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-							<polygon points="0 0 24 0 24 24 0 24"></polygon>
-							<rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1"></rect>
-							<path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
-						</g>
-					</svg>
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<polygon points="0 0 24 0 24 24 0 24"></polygon>
+										<rect fill="#000000" opacity="0.5" transform="translate(8.500000, 12.000000) rotate(-90.000000) translate(-8.500000, -12.000000)" x="7.5" y="7.5" width="2" height="9" rx="1"></rect>
+										<path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+									</g>
+								</svg>
 	            </span>
 	            <h3 class="fs-4 fw-bold mb-0 ms-4">{{metadata.key}}</h3>
 	        </div>
@@ -261,12 +268,12 @@
 
 	        <!--begin::Body-->
 	        <div id="kt_accordion_metadata_item_{{index}}" class="fs-6 collapse show ps-10" data-bs-parent="#kt_accordion_metadata">
-	        	<div *ngFor="let field of toArray(metadata.value); let i=index">
-					<div class="form-check form-check-custom form-check-solid mb-5">
-						<input class="form-check-input" type="checkbox" id="kt_m_{{index}}_{{i}}" [(ngModel)]="selectedMetadata[field.FieldName]" />
-						<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_m_{{index}}_{{i}}" style="padding-left: 20px;"> {{field.FieldName}}</label>
-					</div>
-				</div>
+	        	<div *ngFor="let field of filterMetadata(toArray(metadata.value)); let i=index">
+							<div class="form-check form-check-custom form-check-solid mb-5">
+								<input class="form-check-input" type="checkbox" id="kt_m_{{index}}_{{i}}" [(ngModel)]="selectedMetadata[field.FieldName]" />
+								<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_m_{{index}}_{{i}}" style="padding-left: 20px;"> {{field.FieldName}}</label>
+							</div>
+						</div>
 	        </div>
 	        <!--end::Body-->
 	    </div>
@@ -286,8 +293,11 @@
     </button>
   </div>
   <div class="modal-body">
+  	<div class="row mb-5">
+				<input class="form-control" placeholder="filter" [(ngModel)]="eventFilter.incident">
+  	</div>
   	<div class="mb-5">
-    	<div *ngFor="let field of incidentTypeList; let index=index">
+    	<div *ngFor="let field of filterIncidents(incidentTypeList); let index=index">
 			<div class="form-check form-check-custom form-check-solid mb-5">
 				<input class="form-check-input" type="checkbox" id="kt_type_{{index}}" [(ngModel)]="selectedIncidents[field.text]" />
 				<label class="form-check-label flex-grow-1 fw-bold text-gray-700 fs-7" for="kt_type_{{index}}" style="padding-left: 20px;"> {{field.text}}</label>

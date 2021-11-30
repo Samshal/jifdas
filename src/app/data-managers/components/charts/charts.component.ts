@@ -14,6 +14,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent implements OnInit {
+  locationFilter: any = {
+    country: '',
+    regiion: '',
+    state: '',
+    lga: ''
+  };
+
+  eventFilter: any = {
+    meta: '',
+    incident:''
+  }
   metadata: any;
   requiredSearchType: any = 'metadata';
   requiredChartType: any;
@@ -210,6 +221,22 @@ export class ChartsComponent implements OnInit {
       this.requestingData = false;
       this.chartData = response.contentData;
     })
+  }
+
+  filterMetadata(fields: any): any {
+    if (this.eventFilter.meta == ''){
+      return fields;
+    }
+
+    return fields.filter(item => item.FieldName.toLowerCase().indexOf(this.eventFilter.meta.toLowerCase()) !== -1);
+  }
+
+  filterIncidents(fields: any): any {
+    if (this.eventFilter.incident == ''){
+      return fields;
+    }
+
+    return fields.filter(item => item.text.toLowerCase().indexOf(this.eventFilter.incident.toLowerCase()) !== -1);
   }
 
 }
