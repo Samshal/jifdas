@@ -63,6 +63,12 @@ export class SignInComponent implements OnInit {
           else if (accountType == 2) {
             this.router.navigate(['/data-office/field-reports']);
           }
+          else if (accountType == 3) {
+            this.router.navigate(['/analyst/incidents']);
+          }
+          else if (accountType == 4) {
+            this.router.navigate(['/supervisor/view-analyses']);
+          }
           else {
             this.router.navigate(['/user']);
           }
