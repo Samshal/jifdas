@@ -63,7 +63,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-12 table-responsive">
+	<div class="col-md-12 table-responsive" style="padding: 0 10px 0 10px;">
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover align-middle gs-0 gy-4">
             <thead>
                 <tr class="fw-bolder text-muted bg-light">
@@ -72,7 +72,7 @@
                     <th>Account</th>
                     <th>Location</th>
                     <th>Incident Type</th>
-                    <th>Date</th>
+                    <th style="width:50px">Date Reported</th>
                     <th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -80,7 +80,7 @@
             <tbody *ngIf="currentData?.length != 0" style="max-height: 80vh; overflow: scroll;">
                 <tr *ngFor="let record of currentData">
                     <td (click)="openIncident(record, content)">{{record.IncidentId}}</td>
-                    <td (click)="openIncident(record, content)" class="min-w-200px"><div class=" wrap-text">{{record.IncidentName}}</div></td>
+                    <td (click)="openIncident(record, content)" class="min-w-200px"><div class="wrap-text">{{record.IncidentName}}</div></td>
                 	<td (click)="openIncident(record, content)">
 						<div class="d-flex align-items-center">
 							<!-- <div class="symbol symbol-50px me-5">
@@ -89,7 +89,7 @@
 								</span>
 							</div> -->
 							<div class="d-flex justify-content-start flex-column">
-								<span class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{record.AccountName}}</span>
+								<span class="text-hover-primary mb-1 fs-6">{{record.AccountName}}</span>
 								<span class="text-muted fw-bold text-muted d-block fs-7">{{record.FirstName}} {{record.LastName}}</span>
 							</div>
 						</div>
@@ -101,8 +101,11 @@
 						<span class="text-muted d-block fs-7" *ngIf="record.Village != 'UNKNOWN VILLAGE'"><span class="text-muted fw-bold ">{{record.Village}} </span> <span class='text-small'>Village</span></span>
 						<span class="text-muted text-small text-muted d-block fs-7">{{record.Country}}</span>
 					</td>
-                    <td (click)="openIncident(record, content)">{{record.IncidentTypeName}}</td>
-                    <td (click)="openIncident(record, content)">{{record.IncidentDate}}</td>
+                    <td (click)="openIncident(record, content)">
+						<span class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{record.IncidentTypeName}}</span>
+						<span>{{record.IncidentDate}}</span>
+					</td>
+                    <td (click)="openIncident(record, content)">{{record.DateReported}}</td>
 					<td (click)="openIncident(record, content)">
 						<span class="badge badge-light-primary fs-7 fw-bold" *ngIf="record.StatusCode != 0">Unreviewed</span>
 						<span class="badge badge-success fs-7 fw-bold" *ngIf="record.StatusCode == 0">Approved</span>

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // serverUrlEndpoint: "https://da6f-41-73-6-110.ngrok.io/v1/",
-  serverUrlEndpoint: "http://localhost:6543/v1/",
+  serverUrlEndpoint: "http://192.168.100.247:6789/v1/",
   // serverUrlEndpoint: "http://172.16.70.4:6789/v1/"
 };
 
